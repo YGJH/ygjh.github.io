@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>全臺氣象預報</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <div id="container">
+
+        <button id="menu-button">
+            <i data-lucide="menu"></i>
+             <!-- <b>選擇縣市</b> -->
+        </button>
+        
+        <!-- 選單內容 -->
+        <div class="hidden" id="popup-menu">
+            <button type="button" class="city-button" value="臺北市">臺北市</button>
+            <hr>
+            <button type="button" class="city-button" value="新北市">新北市</button>
+            <hr>
+            <button type="button" class="city-button" value="桃園市">桃園市</button>
+            <hr>
+            <button type="button" class="city-button" value="臺中市">臺中市</button>
+            <hr>
+            <button type="button" class="city-button" value="臺南市">臺南市</button>
+            <hr>
+            <button type="button" class="city-button" value="高雄市">高雄市</button>
+            <hr>
+            <button type="button" class="city-button" value="基隆市">基隆市</button>
+            <hr>
+            <button type="button" class="city-button" value="新竹市">新竹市</button>
+            <hr>
+            <button type="button" class="city-button" value="嘉義市">嘉義市</button>
+            <hr>
+            <button type="button" class="city-button" value="新竹縣">新竹縣</button>
+            <hr>
+            <button type="button" class="city-button" value="苗栗縣">苗栗縣</button>
+            <hr>
+            <button type="button" class="city-button" value="彰化縣">彰化縣</button>
+            <hr>
+            <button type="button" class="city-button" value="南投縣">南投縣</button>
+            <hr>
+            <button type="button" class="city-button" value="雲林縣">雲林縣</button>
+            <hr>
+            <button type="button" class="city-button" value="嘉義縣">嘉義縣</button>
+            <hr>
+            <button type="button" class="city-button" value="屏東縣">屏東縣</button>
+            <hr>
+            <button type="button" class="city-button" value="宜蘭縣">宜蘭縣</button>
+            <hr>
+            <button type="button" class="city-button" value="花蓮縣">花蓮縣</button>
+            <hr>
+            <button type="button" class="city-button" value="臺東縣">臺東縣</button>
+            <hr>
+            <button type="button" class="city-button" value="澎湖縣">澎湖縣</button>
+            <hr>
+            <button type="button" class="city-button" value="金門縣">金門縣</button>
+            <hr>
+            <button type="button" class="city-button" value="連江縣">連江縣</button>
+            <hr>
+        </div>
+
+        <div id="board">
+
+        </div>
+    </div>
+</body>
+
+</html>
