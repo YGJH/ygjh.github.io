@@ -5,15 +5,14 @@ window.onload = function() {
   const menuButton = document.querySelector('#menu-button');
   const popupMenu = document.querySelector('#popup-menu');
   const cityButtons = document.querySelectorAll('.city-button');
-  const weatherDisplay = document.querySelectorAll('#board');
   const container = document.querySelector('#container');
-
+  const menuBackground = document.querySelector('#background-menu');
   const darkModeButton = document.querySelector('#dark-mode');
   const lightModeButton = document.querySelector('#light-mode');
 
   // 如果 localStorage 中有 city 鍵值，則將 cityName 設為該值
   // 否則 cityName 保持為 null
-  let cityName;
+  let cityName = '';
 
   // 檢查 localStorage 是否有儲存 city
   function init() {
@@ -36,6 +35,13 @@ window.onload = function() {
           await fetchWeatherInfo(cityName);
         }
       }, 300000);
+    } else {
+      // 如果沒有存儲的城市，請求使用者地理位置
+      requestUserLocation();
+      
+      if(cityName) {
+        fetchWeatherInfo();
+      }
     }
   }
   init();
@@ -47,6 +53,8 @@ window.onload = function() {
 
   function setDarkMode() {
     mode = 'dark-font';
+    menuBackground.classList.remove('background-menu-dark');
+    menuBackground.classList.add('background-menu-light');
     localStorage.setItem('mode', mode);
     darkModeButton.classList.add(`hidden`);
     darkModeButton.classList.add(`light-font`);
@@ -65,8 +73,10 @@ window.onload = function() {
     popupMenu.classList.remove('light-background');
     popupMenu.classList.add('dark-background');
   }
-
+  
   function setLightMode() {
+    menuBackground.classList.add('background-menu-dark');
+    menuBackground.classList.remove('background-menu-light');
     mode = 'light-font';
     localStorage.setItem('mode', mode);
     lightModeButton.classList.add(`hidden`);
@@ -164,12 +174,14 @@ window.onload = function() {
     try {
       const main_apiUrl =
           'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15';
-      const data = await $.get(main_apiUrl);
+      console.log(cityName);
+          const data = await $.get(main_apiUrl);
       const dd = {
         timestamp: new Date().toLocaleString(),
         data: data.records.location.find(loc => loc.locationName === cityName)
     };
       displayWeatherInfo(dd);
+      localStorage.setItem('city', cityName);
 
     } catch (error) {
       fetchWeatherInfoFromBackend();
@@ -214,5 +226,56 @@ window.onload = function() {
       </div>
         </div>  
         `);
+  }
+
+  // 新增反向地理編碼函式
+  async function getCityNameFromCoords(latitude, longitude) {
+    try {
+      console.log(latitude, longitude);
+        const apiKey = 'AIzaSyDzrASv3gxFcMo5fNXwgrG9lPnFKZtHVM4'; // 替換為您的反向地理編碼API金鑰
+        const geoApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&language=zh-TW&key=${apiKey}`;
+        // console.log(`geoApiUrl = ${geoApiUrl}`);
+        const response = await $.get(geoApiUrl);
+        // console.log(`response = ${response}`);
+        if (response.status === 'OK') {
+            const addressComponents = response.results[0].address_components;
+            const city = addressComponents.find(component => component.types.includes('administrative_area_level_1'));
+            // console.log(`city = ${city}`);
+            return city ? city.long_name : null;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        return null;
+    }
+  }
+
+  // 新增取得使用者地理位置的函式
+  async function requestUserLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const detectedCity = await getCityNameFromCoords(latitude, longitude);
+            if (detectedCity) {
+                cityName = detectedCity;
+                fetchWeatherInfo();
+                if (weatherIntervalId) {
+                    clearInterval(weatherIntervalId);
+                }
+                weatherIntervalId = setInterval(async () => {
+                    if (cityName) {
+                        await fetchWeatherInfo(cityName);
+                    }
+                }, 300000);
+            } else {
+                $('#board').html('<p class="info">無法偵測到您的城市位置。</p>');
+            }
+        }, () => {
+            $('#board').html('<p class="info">無法取得您的地理位置權限。</p>');
+        });
+    } else {
+        $('#board').html('<p class="info">您的瀏覽器不支援地理位置功能。</p>');
+    }
   }
 }
