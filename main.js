@@ -182,17 +182,27 @@ window.onload = function() {
                      .find(element => element.elementName === 'MinT')
                      .time[0]
                      .parameter.parameterName;
-    const timestamp = location.timestamp;  // 假設 timestamp 在 location 中
+    const PoP = location.data.weatherElement
+                     .find(element => element.elementName === 'PoP')
+                     .time[0]
+                     .parameter.parameterName;
+    const CI = location.data.weatherElement
+                     .find(element => element.elementName === 'CI')
+                     .time[0]
+                     .parameter.parameterName;
+    const timestamp = location.timestamp;
 
     $('#board').html(`
       <div id="weather-info" class="gray-background">
       <img src="assets\\1779940.png" style="width: 200px; height: 200px;">
-      <div id="weather-container">
-        <h3 class="light-font"> ${cityName} </h3>
-        <p class="light-font">天氣描述: ${weatherDesc}</p>
-        <p class="light-font">最高溫度: ${maxT}°C</p>
-        <p class="light-font">最低溫度: ${minT}°C</p>
-        <p class="light-font">當前時間: ${timestamp}</p>
+        <div id="weather-container">
+          <h3 class="light-font"> ${cityName} </h3>
+          <p class="light-font">天氣描述: ${weatherDesc}</p>
+          <p class="light-font">最高溫度: ${maxT}°C</p>
+          <p class="light-font">最低溫度: ${minT}°C</p>
+          <p class="light-font">降雨機率: ${PoP}%</p>
+          <p class="light-font">舒適度指數: ${CI}</p>
+          <p class="light-font">時間戳記: ${timestamp}</p>
       </div>
         </div>  
         `);
