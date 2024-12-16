@@ -124,7 +124,7 @@ window.onload = function() {
   // 定義取得並顯示天氣資訊的函式
   async function fetchWeatherInfo() {
     try {
-      console.log("fetchWeatherInfo");
+      // console.log("fetchWeatherInfo");
       // const apiUrl =
       // 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15&locationName=%E5%AE%9C%E8%98%AD%E7%B8%A3';
       const apiUrl =
