@@ -1,6 +1,5 @@
 window.onload = function() {
   let weatherIntervalId = null;
-  let flag = false;
 
   let mode = localStorage.getItem('mode') || 'dark-font';
   const menuButton = document.querySelector('#menu-button');
@@ -17,27 +16,29 @@ window.onload = function() {
   let cityName;
 
   // 檢查 localStorage 是否有儲存 city
-  if (mode == 'dark-font') {
-    setDarkMode();
-  } else {
-    setLightMode();
-  }
-  const storedCity = localStorage.getItem('city') || null;
-  if (storedCity) {
-    cityName = storedCity;
-    fetchWeatherInfo();
-    if (weatherIntervalId) {
-      clearInterval(weatherIntervalId);
+  function init() {
+    if (mode == 'dark-font') {
+      setDarkMode();
+    } else {
+      setLightMode();
     }
-
-    // 設置新的定時器
-    weatherIntervalId = setInterval(async () => {
-      if (cityName) {
-        console.log('更新天氣資訊：', cityName);
-        await fetchWeatherInfo(cityName);
+    const storedCity = localStorage.getItem('city') || null;
+    if (storedCity) {
+      cityName = storedCity;
+      fetchWeatherInfo();
+      if (weatherIntervalId) {
+        clearInterval(weatherIntervalId);
       }
-    }, 300000);
+
+      // 設置新的定時器
+      weatherIntervalId = setInterval(async () => {
+        if (cityName) {
+          await fetchWeatherInfo(cityName);
+        }
+      }, 300000);
+    }
   }
+  init();
 
   lucide.createIcons();
 
@@ -67,7 +68,6 @@ window.onload = function() {
 
   function setLightMode() {
     mode = 'light-font';
-    console.log(darkModeButton);
     localStorage.setItem('mode', mode);
     lightModeButton.classList.add(`hidden`);
     lightModeButton.classList.remove(`light-font`);
@@ -131,7 +131,6 @@ window.onload = function() {
       // 設置新的定時器
       weatherIntervalId = setInterval(async () => {
         if (cityName) {
-          console.log('更新天氣資訊：', cityName);
           await fetchWeatherInfo(cityName);
         }
       }, 300000);
@@ -139,32 +138,41 @@ window.onload = function() {
       return false;
     });
   });
-  // 定義取得並顯示天氣資訊的函式
-  async function fetchWeatherInfo() {
+  
+
+  
+  async function fetchWeatherInfoFromBackend() {
     try {
-      // console.log("fetchWeatherInfo");
-      // const apiUrl =
-      // 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15&locationName=%E5%AE%9C%E8%98%AD%E7%B8%A3';
       const apiUrl =
           `https://backend-bb-1af6d7085259.herokuapp.com/weather?city=${encodeURIComponent(cityName)}`;
-      // console.log(cityName);
       // const apiUrl =
-      // `http://localhost:3000/weather?city=${encodeURIComponent(cityName)}`;
-      if (!flag) {
-        flag = true;
-        $('#board').html('<p class="info">正在取得天氣資訊...</p>');
-      }
+      //     `http://localhost:3000/weather?city=${encodeURIComponent(cityName)}`;
       const data =
           await $.post(apiUrl, JSON.stringify({city: cityName}), null, 'json');
-      console.log('資料獲取成功：', data);
       displayWeatherInfo(data);
 
     } catch (error) {
-      console.error('資料獲取錯誤：', error);
       cityName = '';
-      console.log('清除定時器');
       clearInterval(weatherIntervalId);
       $('#board').html('<p class="info">無法取得天氣資訊。</p>');
+    }
+  }
+
+
+  // 定義取得並顯示天氣資訊的函式
+  async function fetchWeatherInfo() {
+    try {
+      const main_apiUrl =
+          'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15';
+      const data = await $.get(main_apiUrl);
+      const dd = {
+        timestamp: new Date().toLocaleString(),
+        data: data.records.location.find(loc => loc.locationName === cityName)
+    };
+      displayWeatherInfo(dd);
+
+    } catch (error) {
+      fetchWeatherInfoFromBackend();
     }
   }
 
@@ -183,13 +191,13 @@ window.onload = function() {
                      .time[0]
                      .parameter.parameterName;
     const PoP = location.data.weatherElement
-                     .find(element => element.elementName === 'PoP')
-                     .time[0]
-                     .parameter.parameterName;
+                    .find(element => element.elementName === 'PoP')
+                    .time[0]
+                    .parameter.parameterName;
     const CI = location.data.weatherElement
-                     .find(element => element.elementName === 'CI')
-                     .time[0]
-                     .parameter.parameterName;
+                   .find(element => element.elementName === 'CI')
+                   .time[0]
+                   .parameter.parameterName;
     const timestamp = location.timestamp;
 
     $('#board').html(`
