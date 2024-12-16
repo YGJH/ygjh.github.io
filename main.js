@@ -127,12 +127,11 @@ window.onload = function() {
       console.log("fetchWeatherInfo");
       // const apiUrl =
       // 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15&locationName=%E5%AE%9C%E8%98%AD%E7%B8%A3';
-      // const apiUrl =
-          // `https://backend-bb-1af6d7085259.herokuapp.com/weather?city=${
-              // encodeURIComponent(cityName)}`;
-      // console.log(cityName);
       const apiUrl =
-      `http://localhost:3000/weather?city=${encodeURIComponent(cityName)}`;
+          `https://backend-bb-1af6d7085259.herokuapp.com/weather?city=${encodeURIComponent(cityName)}`;
+      // console.log(cityName);
+      // const apiUrl =
+      // `http://localhost:3000/weather?city=${encodeURIComponent(cityName)}`;
       if (!flag) {
         flag = true;
         $('#board').html('<p class="info">正在取得天氣資訊...</p>');
@@ -175,7 +174,7 @@ window.onload = function() {
         <p class="${mode}">天氣描述: ${weatherDesc}</p>
         <p class="${mode}">最高溫度: ${maxT}°C</p>
         <p class="${mode}">最低溫度: ${minT}°C</p>
-        <p class="${mode}">${timestamp}</p>
+        <p class="${mode}">觀測時間: ${timestamp}</p>
       </div>
         </div>  
         `);
