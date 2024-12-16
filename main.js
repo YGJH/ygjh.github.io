@@ -232,7 +232,7 @@ window.onload = function() {
   async function getCityNameFromCoords(latitude, longitude) {
     try {
       console.log(latitude, longitude);
-        const apiKey = 'AIzaSyDzrASv3gxFcMo5fNXwgrG9lPnFKZtHVM4'; // 替換為您的反向地理編碼API金鑰
+        const apiKey = ''; // 替換為您的反向地理編碼API金鑰
         const geoApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&language=zh-TW&key=${apiKey}`;
         // console.log(`geoApiUrl = ${geoApiUrl}`);
         const response = await $.get(geoApiUrl);
