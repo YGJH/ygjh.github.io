@@ -231,8 +231,8 @@ window.onload = function() {
   // 新增反向地理編碼函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-        const backendUrl = 'http://localhost:3000/weather';
-        // const backendUrl = 'https://backend-bb-1af6d7085259.herokuapp.com/weather';
+        // const backendUrl = 'http://localhost:3000/weather';
+        const backendUrl = 'https://backend-bb-1af6d7085259.herokuapp.com/weather';
         const response = await $.get(`${backendUrl}?latitude=${latitude}&longitude=${longitude}`);
         
         if (response && response.data && response.data.locationName) {
