@@ -130,7 +130,7 @@
     position: fixed;
     padding: 10px;
     width: 200px;   
-    max-height: fit-content;
+    max-height: 100%;
     overflow-y: auto;
     margin-top: 50px; /* 添加這行，調整與按鈕的距離 */
     z-index: 40; /* 添加這行，調整與按鈕的距離 */

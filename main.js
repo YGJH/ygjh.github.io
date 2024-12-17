@@ -231,21 +231,18 @@ window.onload = function() {
   // 新增反向地理編碼函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-      console.log(latitude, longitude);
-        const apiKey = ''; // 替換為您的反向地理編碼API金鑰
-        const geoApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&language=zh-TW&key=${apiKey}`;
-        // console.log(`geoApiUrl = ${geoApiUrl}`);
-        const response = await $.get(geoApiUrl);
-        // console.log(`response = ${response}`);
-        if (response.status === 'OK') {
-            const addressComponents = response.results[0].address_components;
-            const city = addressComponents.find(component => component.types.includes('administrative_area_level_1'));
-            // console.log(`city = ${city}`);
-            return city ? city.long_name : null;
+        const backendUrl = 'http://localhost:3000/weather';
+        // const backendUrl = 'https://backend-bb-1af6d7085259.herokuapp.com/weather';
+        const response = await $.get(`${backendUrl}?latitude=${latitude}&longitude=${longitude}`);
+        
+        if (response && response.data && response.data.locationName) {
+            return response.data.locationName;
         } else {
+            console.error('無法從後端取得縣市名稱');
             return null;
         }
     } catch (error) {
+        console.error('從後端取得縣市名稱時發生錯誤：', error);
         return null;
     }
   }
@@ -259,6 +256,7 @@ window.onload = function() {
             const detectedCity = await getCityNameFromCoords(latitude, longitude);
             if (detectedCity) {
                 cityName = detectedCity;
+                localStorage.setItem('city', cityName);
                 fetchWeatherInfo();
                 if (weatherIntervalId) {
                     clearInterval(weatherIntervalId);
