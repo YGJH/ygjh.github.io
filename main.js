@@ -227,12 +227,20 @@ window.onload = function() {
         `);
   }
 
-  // 新增反向地理編碼函式
+  // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-        // const backendUrl = 'http://localhost:3000/weather';
         const backendUrl = 'https://backend-bb-1af6d7085259.herokuapp.com/weather';
-        const response = await $.get(`${backendUrl}?latitude=${latitude}&longitude=${longitude}`);
+        
+        const response = await $.ajax({
+            url: backendUrl,
+            method: 'GET',
+            data: {
+                latitude: latitude,
+                longitude: longitude
+            },
+            timeout: 5000 // 設定超時為5000毫秒（5秒）
+        });
         
         if (response && response.data && response.data.locationName) {
             return response.data.locationName;
@@ -241,25 +249,36 @@ window.onload = function() {
             return null;
         }
     } catch (error) {
-        console.error('從後端取得縣市名稱時發生錯誤：', error);
+        if (error.statusText === 'timeout') {
+            console.error('請求後端獲取縣市名稱超時');
+        } else {
+            console.error('從後端取得縣市名稱時發生錯誤：', error);
+        }
         return null;
     }
-  }
+}
 
-  // 新增取得使用者地理位置的函式
-  async function requestUserLocation() {
+// 修改後的 requestUserLocation 函式
+async function requestUserLocation() {
     if (navigator.geolocation) {
+        // 顯示載入指示器
+        $('#board').addClass('loading').html('<div class="loading-spinner"></div>');
+        
         navigator.geolocation.getCurrentPosition(async (position) => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             const detectedCity = await getCityNameFromCoords(latitude, longitude);
+            
             if (detectedCity) {
                 cityName = detectedCity;
                 localStorage.setItem('city', cityName);
                 fetchWeatherInfo();
+                
                 if (weatherIntervalId) {
                     clearInterval(weatherIntervalId);
                 }
+                
+                // 設置新的定時器
                 weatherIntervalId = setInterval(async () => {
                     if (cityName) {
                         await fetchWeatherInfo(cityName);
@@ -268,11 +287,17 @@ window.onload = function() {
             } else {
                 $('#board').html('<p class="info">無法偵測到您的城市位置。</p>');
             }
-        }, () => {
+            // 隱藏載入指示器
+            $('#board').removeClass('loading');
+        }, (error) => {
+            console.error('Geolocation error:', error);
             $('#board').html('<p class="info">無法取得您的地理位置權限。</p>');
+            $('#board').removeClass('loading');
+        }, {
+            timeout: 10000 // 設定地理位置請求的超時為10秒
         });
     } else {
         $('#board').html('<p class="info">您的瀏覽器不支援地理位置功能。</p>');
     }
-  }
+}
 }
