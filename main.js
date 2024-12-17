@@ -174,7 +174,6 @@ window.onload = function() {
     try {
       const main_apiUrl =
           'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15';
-      console.log(cityName);
           const data = await $.get(main_apiUrl);
       const dd = {
         timestamp: new Date().toLocaleString(),

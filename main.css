@@ -1,3 +1,63 @@
+@media (max-width: 1500px) {
+    #weather-info{
+        display: flex;
+        position: relative;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 80%;
+        align-items: center;
+        padding: 30px;
+        margin-left: 0px;
+        margin-top: 150px;
+        border: solid 1px rgb(0, 0, 0);
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5) , 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+    }
+    #weather-container{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        float: left;
+        padding: 30px;
+    }
+    #weather-container h3 {
+        font-size: 20px;
+        font-weight: bold;
+        /* float: left; */
+        font-family: sans-serif;
+    }
+    #weather-container p {
+        font-size: 20px;
+        /* float: left; */
+        font-family: sans-serif;
+    }
+    #menu-button {
+        position: fixed;
+        padding-top: 6px;
+        top: 20px;
+        left: 20px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5) , 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        background-color: transparent;
+        border: solid 1px rgb(112, 112, 112);
+        border-radius: 10px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+    #dark-mode {
+        background-color: transparent;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5) , 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        border: solid 1px rgb(112, 112, 112);
+        border-radius: 10px;
+        padding-top: 4px;
+        cursor: pointer;
+        position: fixed;
+        top:20px;
+        right: 3%;
+    }
+    
+}
+
+
 #weather-info{
     display: flex;
     position: relative;
@@ -12,21 +72,21 @@
     border-radius: 10px;
 }
 #weather-container{
-    display: inline-flex;
+    display: flex;
+    flex-wrap: nowrap;
     flex-direction: column;
     float: left;
-    flex-wrap: 0;
     padding: 30px;
 }
 #weather-container h3 {
     font-size: 20px;
     font-weight: bold;
-    float: left;
+    /* float: left; */
     font-family: sans-serif;
 }
 #weather-container p {
     font-size: 20px;
-    float: left;
+    /* float: left; */
     font-family: sans-serif;
 }
 
