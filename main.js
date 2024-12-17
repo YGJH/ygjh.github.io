@@ -294,7 +294,7 @@ async function requestUserLocation() {
             $('#board').html('<p class="info">無法取得您的地理位置權限。</p>');
             $('#board').removeClass('loading');
         }, {
-            timeout: 10000 // 設定地理位置請求的超時為10秒
+            timeout: 1000000 // 設定地理位置請求的超時為10秒
         });
     } else {
         $('#board').html('<p class="info">您的瀏覽器不支援地理位置功能。</p>');
