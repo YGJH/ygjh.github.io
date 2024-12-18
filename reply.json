@@ -1,0 +1,151 @@
+{
+    "timestamp": "12/18/2024, 10:49:20 PM",
+    "data": {
+        "locationName": "臺北市",
+        "weatherElement": [
+            {
+                "elementName": "Wx",
+                "time": [
+                    {
+                        "startTime": "2024-12-18 12:00:00",
+                        "endTime": "2024-12-18 18:00:00",
+                        "parameter": {
+                            "parameterName": "陰天",
+                            "parameterValue": "7"
+                        }
+                    },
+                    {
+                        "startTime": "2024-12-18 18:00:00",
+                        "endTime": "2024-12-19 06:00:00",
+                        "parameter": {
+                            "parameterName": "陰天",
+                            "parameterValue": "7"
+                        }
+                    },
+                    {
+                        "startTime": "2024-12-19 06:00:00",
+                        "endTime": "2024-12-19 18:00:00",
+                        "parameter": {
+                            "parameterName": "陰短暫雨",
+                            "parameterValue": "11"
+                        }
+                    }
+                ]
+            },
+            {
+                "elementName": "PoP",
+                "time": [
+                    {
+                        "startTime": "2024-12-18 12:00:00",
+                        "endTime": "2024-12-18 18:00:00",
+                        "parameter": {
+                            "parameterName": "10",
+                            "parameterUnit": "百分比"
+                        }
+                    },
+                    {
+                        "startTime": "2024-12-18 18:00:00",
+                        "endTime": "2024-12-19 06:00:00",
+                        "parameter": {
+                            "parameterName": "20",
+                            "parameterUnit": "百分比"
+                        }
+                    },
+                    {
+                        "startTime": "2024-12-19 06:00:00",
+                        "endTime": "2024-12-19 18:00:00",
+                        "parameter": {
+                            "parameterName": "30",
+                            "parameterUnit": "百分比"
+                        }
+                    }
+                ]
+            },
+            {
+                "elementName": "MinT",
+                "time": [
+                    {
+                        "startTime": "2024-12-18 12:00:00",
+                        "endTime": "2024-12-18 18:00:00",
+                        "parameter": {
+                            "parameterName": "15",
+                            "parameterUnit": "C"
+                        }
+                    },
+                    {
+                        "startTime": "2024-12-18 18:00:00",
+                        "endTime": "2024-12-19 06:00:00",
+                        "parameter": {
+                            "parameterName": "13",
+                            "parameterUnit": "C"
+                        }
+                    },
+                    {
+                        "startTime": "2024-12-19 06:00:00",
+                        "endTime": "2024-12-19 18:00:00",
+                        "parameter": {
+                            "parameterName": "13",
+                            "parameterUnit": "C"
+                        }
+                    }
+                ]
+            },
+            {
+                "elementName": "CI",
+                "time": [
+                    {
+                        "startTime": "2024-12-18 12:00:00",
+                        "endTime": "2024-12-18 18:00:00",
+                        "parameter": {
+                            "parameterName": "寒冷至稍有寒意"
+                        }
+                    },
+                    {
+                        "startTime": "2024-12-18 18:00:00",
+                        "endTime": "2024-12-19 06:00:00",
+                        "parameter": {
+                            "parameterName": "寒冷"
+                        }
+                    },
+                    {
+                        "startTime": "2024-12-19 06:00:00",
+                        "endTime": "2024-12-19 18:00:00",
+                        "parameter": {
+                            "parameterName": "寒冷"
+                        }
+                    }
+                ]
+            },
+            {
+                "elementName": "MaxT",
+                "time": [
+                    {
+                        "startTime": "2024-12-18 12:00:00",
+                        "endTime": "2024-12-18 18:00:00",
+                        "parameter": {
+                            "parameterName": "17",
+                            "parameterUnit": "C"
+                        }
+                    },
+                    {
+                        "startTime": "2024-12-18 18:00:00",
+                        "endTime": "2024-12-19 06:00:00",
+                        "parameter": {
+                            "parameterName": "15",
+                            "parameterUnit": "C"
+                        }
+                    },
+                    {
+                        "startTime": "2024-12-19 06:00:00",
+                        "endTime": "2024-12-19 18:00:00",
+                        "parameter": {
+                            "parameterName": "15",
+                            "parameterUnit": "C"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "advice": "根據臺北市今天的天氣狀況，建議您可以穿著長袖上衣搭配外套或輕便外套，再搭配長褲或長裙。由於溫度較涼，可選擇薄款的毛衣或"
+}

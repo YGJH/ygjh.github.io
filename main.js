@@ -38,10 +38,6 @@ window.onload = function() {
     } else {
       // 如果沒有存儲的城市，請求使用者地理位置
       requestUserLocation();
-      
-      if(cityName) {
-        fetchWeatherInfo();
-      }
     }
   }
   init();
@@ -73,7 +69,7 @@ window.onload = function() {
     popupMenu.classList.remove('light-background');
     popupMenu.classList.add('dark-background');
   }
-  
+
   function setLightMode() {
     menuBackground.classList.add('background-menu-dark');
     menuBackground.classList.remove('background-menu-light');
@@ -148,157 +144,161 @@ window.onload = function() {
       return false;
     });
   });
-  
 
-  
+
+
   async function fetchWeatherInfoFromBackend() {
-    try {
-      const apiUrl =
-          `https://backend-bb-1af6d7085259.herokuapp.com/weather?city=${encodeURIComponent(cityName)}`;
-      // const apiUrl =
-      //     `http://localhost:3000/weather?city=${encodeURIComponent(cityName)}`;
-      const data =
-          await $.post(apiUrl, JSON.stringify({city: cityName}), null, 'json');
-      displayWeatherInfo(data);
-
-    } catch (error) {
-      cityName = '';
-      clearInterval(weatherIntervalId);
-      $('#board').html('<p class="info">無法取得天氣資訊。</p>');
-    }
+    const apiUrl = `http://localhost:3000/weather`;
+    console.log(cityName);
+    await $.ajax({
+      url: apiUrl,
+      type: 'POST',
+      data: JSON.stringify({cityName}),
+      contentType: 'application/json',
+      dataType: 'json',
+      success: (data) => {
+        console.log(data);
+        displayWeatherInfo(data);
+        localStorage.setItem('city', cityName);
+      },
+      error: function() {
+        cityName = '';
+        clearInterval(weatherIntervalId);
+        $('#board').html('<p class="info">無法取得天氣資訊。</p>');
+      },
+      timeout: 500000
+    });
   }
 
 
   // 定義取得並顯示天氣資訊的函式
   async function fetchWeatherInfo() {
     try {
-      const main_apiUrl =
-          'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15';
-          const data = await $.get(main_apiUrl);
-      const dd = {
-        timestamp: new Date().toLocaleString(),
-        data: data.records.location.find(loc => loc.locationName === cityName)
-    };
-      displayWeatherInfo(dd);
-      localStorage.setItem('city', cityName);
+      // const main_apiUrl =
+      //     'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15';
+      // const data = await $.get(main_apiUrl);
+      // const dd = {
+      //   timestamp: new Date().toLocaleString(),
+      //   data: data.records.location.find(loc => loc.locationName ===
+      //   cityName)
+      // };
+      // displayWeatherInfo(dd);
+      // localStorage.setItem('city', cityName);
+      fetchWeatherInfoFromBackend();
 
     } catch (error) {
+      console.error(error);
       fetchWeatherInfoFromBackend();
     }
   }
 
   // 顯示天氣資訊的函式
   function displayWeatherInfo(location) {
-    const weatherDesc = location.data.weatherElement
-                            .find(element => element.elementName === 'Wx')
-                            .time[0]
-                            .parameter.parameterName;
-    const maxT = location.data.weatherElement
-                     .find(element => element.elementName === 'MaxT')
+    const weatherElements = location.data.weatherElement;
+
+    const weatherDesc =
+        weatherElements.find(element => element.elementName === 'Wx')
+            .time[0]
+            .parameter.parameterName;
+    const maxT = weatherElements.find(element => element.elementName === 'MaxT')
                      .time[0]
                      .parameter.parameterName;
-    const minT = location.data.weatherElement
-                     .find(element => element.elementName === 'MinT')
+    const minT = weatherElements.find(element => element.elementName === 'MinT')
                      .time[0]
                      .parameter.parameterName;
-    const PoP = location.data.weatherElement
-                    .find(element => element.elementName === 'PoP')
+    const PoP = weatherElements.find(element => element.elementName === 'PoP')
                     .time[0]
                     .parameter.parameterName;
-    const CI = location.data.weatherElement
-                   .find(element => element.elementName === 'CI')
+    const CI = weatherElements.find(element => element.elementName === 'CI')
                    .time[0]
                    .parameter.parameterName;
     const timestamp = location.timestamp;
+    const advice = location.advice || '無建議資訊';
 
     $('#board').html(`
       <div id="weather-info" class="gray-background">
-      <img src="assets\\1779940.png" style="width: 200px; height: 200px;">
+        <img src="assets\\1779940.png" style="width: 200px; height: 200px;">
         <div id="weather-container">
-          <h3 class="light-font"> ${cityName} </h3>
+          <h3 class="light-font"> ${location.data.locationName} </h3>
           <p class="light-font">天氣描述: ${weatherDesc}</p>
           <p class="light-font">最高溫度: ${maxT}°C</p>
           <p class="light-font">最低溫度: ${minT}°C</p>
           <p class="light-font">降雨機率: ${PoP}%</p>
           <p class="light-font">舒適度指數: ${CI}</p>
           <p class="light-font">時間戳記: ${timestamp}</p>
-      </div>
-        </div>  
-        `);
+          </div>
+        </div> 
+
+          <div id="advice-info" class="gray-background">
+          <p class="light-font">建議: ${advice}</p>
+        </div>
+    `);
   }
 
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-        const backendUrl = 'https://backend-bb-1af6d7085259.herokuapp.com/weather';
-        // const backendUrl = 'http://localhost:3000/weather';
-        
-        const response = await $.ajax({
-            url: backendUrl,
-            method: 'GET',
-            data: {
-                latitude: latitude,
-                longitude: longitude
-            },
-            timeout: 5000 // 設定超時為5000毫秒（5秒）
-        });
-        
-        if (response && response.data && response.data.locationName) {
-            return response.data.locationName;
-        } else {
-            console.error('無法從後端取得縣市名稱');
-            return null;
-        }
-    } catch (error) {
-        if (error.statusText === 'timeout') {
-            console.error('請求後端獲取縣市名稱超時');
-        } else {
-            console.error('從後端取得縣市名稱時發生錯誤：', error);
-        }
-        return null;
-    }
-}
+      console.log(latitude, longitude);
+      // const backendUrl =
+      // 'https://backend-bb-1af6d7085259.herokuapp.com/weather';
+      const backendUrl = 'http://localhost:3000/weather';
+      const response = await $.ajax({
+        url: backendUrl,
+        method: 'GET',
+        data: {latitude: latitude, longitude: longitude},
+        timeout: 500000  // 設定超時為5000毫秒（50秒）
+      });
+      console.log(response);
+      if (response && response.data && response.data.locationName) {
+        cityName = response.data.locationName;
+        displayWeatherInfo(response);
+        localStorage.setItem('city', cityName);
 
-// 修改後的 requestUserLocation 函式
-async function requestUserLocation() {
-    if (navigator.geolocation) {
-        // 顯示載入指示器
-        $('#board').addClass('loading').html('<div class="loading-spinner"></div>');
-        
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            const detectedCity = await getCityNameFromCoords(latitude, longitude);
-            
-            if (detectedCity) {
-                cityName = detectedCity;
-                localStorage.setItem('city', cityName);
-                fetchWeatherInfo();
-                
-                if (weatherIntervalId) {
-                    clearInterval(weatherIntervalId);
-                }
-                
-                // 設置新的定時器
-                weatherIntervalId = setInterval(async () => {
-                    if (cityName) {
-                        await fetchWeatherInfo(cityName);
-                    }
-                }, 300000);
-            } else {
-                $('#board').html('<p class="info">無法偵測到您的城市位置。</p>');
-            }
-            // 隱藏載入指示器
-            $('#board').removeClass('loading');
-        }, (error) => {
-            console.error('Geolocation error:', error);
-            $('#board').html('<p class="info">無法取得您的地理位置權限。</p>');
-            $('#board').removeClass('loading');
-        }, {
-            timeout: 1000000 // 設定地理位置請求的超時為10秒
-        });
-    } else {
-        $('#board').html('<p class="info">您的瀏覽器不支援地理位置功能。</p>');
+        if (weatherIntervalId) {
+          clearInterval(weatherIntervalId);
+        }
+
+        // 設置新的定時器
+        weatherIntervalId = setInterval(async () => {
+          if (cityName) {
+            await fetchWeatherInfo(cityName);
+          }
+        }, 300000);
+        $('#board').removeClass('loading');
+
+        return null;
+      } else {
+        console.error('無法從後端取得縣市名稱');
+        $('#board').html('<p class="info">無法偵測到您的城市位置。</p>');
+        console.error('Geolocation error:', error);
+        $('#board').html('<p class="info">無法取得您的地理位置權限。</p>');
+        $('#board').removeClass('loading');
+        return null;
+      }
+    } catch (error) {
+      if (error.statusText === 'timeout') {
+        console.error('請求後端獲取縣市名稱超時');
+      } else {
+        console.error('從後端取得縣市名稱時發生錯誤：', error);
+      }
+      $('#board').removeClass('loading');
+
+      return null;
     }
-}
+  }
+
+  // 修改後的 requestUserLocation 函式
+  async function requestUserLocation() {
+    if (navigator.geolocation) {
+      // 顯示載入指示器
+      $('#board').addClass('loading').html(
+          '<div class="loading-spinner"></div>');
+
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        await getCityNameFromCoords(latitude, longitude);
+      });
+    }
+  }
 }
