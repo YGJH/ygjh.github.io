@@ -216,6 +216,7 @@ window.onload = function() {
     const advice = location.advice || '無建議資訊';
 
     $('#board').html(`
+      
       <div id="weather-info" class="gray-background">
         <img src="assets\\1779940.png" style="width: 200px; height: 200px;">
         <div id="weather-container">
@@ -226,12 +227,9 @@ window.onload = function() {
           <p class="light-font">降雨機率: ${PoP}%</p>
           <p class="light-font">舒適度指數: ${CI}</p>
           <p class="light-font">時間戳記: ${timestamp}</p>
+          <p class="light-font">建議: ${advice}</p>
           </div>
         </div> 
-
-          <div id="advice-info" class="gray-background">
-          <p class="light-font">建議: ${advice}</p>
-        </div>
     `);
   }
 
