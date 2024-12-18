@@ -161,7 +161,7 @@ window.onload = function() {
         displayWeatherInfo(data);
         localStorage.setItem('city', cityName);
       },
-      error: function() {
+      error: () => {
         cityName = '';
         clearInterval(weatherIntervalId);
         $('#board').html('<p class="info">無法取得天氣資訊。</p>');
@@ -193,45 +193,78 @@ window.onload = function() {
   }
 
   // 顯示天氣資訊的函式
-  function displayWeatherInfo(location) {
-    const weatherElements = location.data.weatherElement;
-
-    const weatherDesc =
-        weatherElements.find(element => element.elementName === 'Wx')
-            .time[0]
-            .parameter.parameterName;
-    const maxT = weatherElements.find(element => element.elementName === 'MaxT')
-                     .time[0]
-                     .parameter.parameterName;
-    const minT = weatherElements.find(element => element.elementName === 'MinT')
-                     .time[0]
-                     .parameter.parameterName;
-    const PoP = weatherElements.find(element => element.elementName === 'PoP')
-                    .time[0]
-                    .parameter.parameterName;
-    const CI = weatherElements.find(element => element.elementName === 'CI')
-                   .time[0]
-                   .parameter.parameterName;
+function displayWeatherInfo(location) {
     const timestamp = location.timestamp;
+    const city = location.city;
+    const currentWeather = location.currentWeather;
+    const forecast = location.forecast;
     const advice = location.advice || '無建議資訊';
 
     $('#board').html(`
-      
       <div id="weather-info" class="gray-background">
         <img src="assets\\1779940.png" style="width: 200px; height: 200px;">
         <div id="weather-container">
-          <h3 class="light-font"> ${location.data.locationName} </h3>
-          <p class="light-font">天氣描述: ${weatherDesc}</p>
-          <p class="light-font">最高溫度: ${maxT}°C</p>
-          <p class="light-font">最低溫度: ${minT}°C</p>
-          <p class="light-font">降雨機率: ${PoP}%</p>
-          <p class="light-font">舒適度指數: ${CI}</p>
-          <p class="light-font">時間戳記: ${timestamp}</p>
-          <p class="light-font">建議: ${advice}</p>
+          <h3 class="light-font"> ${city} </h3>
+          
+          <!-- 新增的切換開關 -->
+          <div class="toggle-container">
+            <label class="switch">
+              <input type="checkbox" id="toggle-weather">
+              <span class="slider round"></span>
+            </label>
+            <span class="toggle-label">切換天氣顯示</span>
           </div>
-        </div> 
+
+          <!-- 當前天氣資訊 -->
+          <div id="current-weather">
+            <p class="light-font">天氣描述: ${currentWeather.weather}</p>
+            <p class="light-font">最高溫度: ${currentWeather.maxTemp}°C</p>
+            <p class="light-font">最低溫度: ${currentWeather.minTemp}°C</p>
+            <p class="light-font">降雨機率: ${currentWeather.pop}%</p>
+            <p class="light-font">時間戳記: ${timestamp}</p>
+            <p class="light-font">建議: ${advice}</p>
+          </div>
+
+          <!-- 未來三天天氣預報 -->
+          <div id="forecast-weather" style="display: none;">
+            <p class="light-font">${forecast}</p>
+          </div>
+        </div>
+      </div> 
     `);
-  }
+
+    // 添加切換開關的事件監聽器
+    $('#toggle-weather').on('change', function() {
+      if(this.checked) {
+        $('#current-weather').hide();
+        $('#forecast-weather').show();
+      } else {
+        $('#forecast-weather').hide();
+        $('#current-weather').show();
+      }
+    });
+}
+
+// 新增的生成未來三天天氣預報的函式
+function generateForecastHTML(forecast) {
+    if (!forecast || forecast.length === 0) {
+        return '<p class="light-font">無未來天氣預報資料。</p>';
+    }
+
+    let forecastHTML = '<h3 class="light-font">未來三天天氣預報</h3>';
+    forecast.forEach(day => {
+        forecastHTML += `
+            <div class="forecast-day">
+                <p class="light-font">日期: ${day.date}</p>
+                <p class="light-font">天氣描述: ${day.weather}</p>
+                <p class="light-font">最高溫度: ${day.maxTemp}°C</p>
+                <p class="light-font">最低溫度: ${day.minTemp}°C</p>
+                <p class="light-font">降雨機率: ${day.pop}%</p>
+            </div>
+        `;
+    });
+    return forecastHTML;
+}
 
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
