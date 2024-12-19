@@ -9,7 +9,6 @@ window.onload = function() {
   const menuBackground = document.querySelector('#background-menu');
   const darkModeButton = document.querySelector('#dark-mode');
   const lightModeButton = document.querySelector('#light-mode');
-
   // 如果 localStorage 中有 city 鍵值，則將 cityName 設為該值
   // 否則 cityName 保持為 null
   let cityName = '';
@@ -20,23 +19,24 @@ window.onload = function() {
   // 在初始化時新增切換按鈕
   const headerElement = document.querySelector('#background-menu');
   const apiToggleHtml = `
-    <div id="api-toggle-container">
-      <label class="switch">
-        <input type="checkbox" id="api-toggle">
+  <div id="api-toggle-container">
+  <label class="switch">
+  <input type="checkbox" id="api-toggle">
         <span class="slider round"></span>
-      </label>
-      <span class="toggle-label light-font">快速回應</span>
-    </div>
-  `;
+        </label>
+      <span class="toggle-label">快速回應</span>
+      </div>
+      `;
   headerElement.insertAdjacentHTML('beforeend', apiToggleHtml);
 
   // 綁定切換事件
   const apiToggle = document.querySelector('#api-toggle');
   apiToggle.addEventListener('change', function() {
     useFrontendApi = this.checked;
-    fetchWeatherInfo(); // 立即重新獲取天氣資訊
+    fetchWeatherInfo();  // 立即重新獲取天氣資訊
   });
 
+  const toggleButton = document.querySelector('.toggle-label');
   // 檢查 localStorage 是否有儲存 city
   function init() {
     if (mode == 'dark-font') {
@@ -72,6 +72,8 @@ window.onload = function() {
 
   function setDarkMode() {
     mode = 'dark-font';
+    toggleButton.classList.add('light-font');
+    toggleButton.classList.remove('dark-font');
     menuBackground.classList.remove('background-menu-dark');
     menuBackground.classList.add('background-menu-light');
     localStorage.setItem('mode', mode);
@@ -96,6 +98,8 @@ window.onload = function() {
   function setLightMode() {
     menuBackground.classList.add('background-menu-dark');
     menuBackground.classList.remove('background-menu-light');
+    toggleButton.classList.add('dark-font');
+    toggleButton.classList.remove('light-font');
     mode = 'light-font';
     localStorage.setItem('mode', mode);
     lightModeButton.classList.add(`hidden`);
@@ -174,8 +178,9 @@ window.onload = function() {
     const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
     console.log(cityName);
     // 添加載入動畫
-    $('#board').html('<div class="loading-container"><div class="loading-spinner"></div><p class="loading-text light-font">正在取得天氣資訊...</p></div>');
-    
+    $('#board').html(
+        `<div class="loading-container"><div class="loading-spinner"></div><p class="${(mode === 'light-font')?'dark-font':'light-font'}">正在取得天氣資訊...</p></div>`);
+
     await $.ajax({
       url: apiUrl,
       type: 'POST',
@@ -202,19 +207,24 @@ window.onload = function() {
     try {
       if (useFrontendApi) {
         // 使用前端 API
-        const main_apiUrl = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15';
+        const main_apiUrl =
+            'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15';
         const data = await $.get(main_apiUrl);
-        const location = data.records.location.find(loc => loc.locationName === cityName);
-        
+        const location =
+            data.records.location.find(loc => loc.locationName === cityName);
+
         if (location) {
           // 轉換資料格式以符合顯示需求
           const weatherData = {
             timestamp: new Date().toLocaleString(),
             city: cityName,
             currentWeather: {
-              weather: location.weatherElement[0].time[0].parameter.parameterName,
-              maxTemp: location.weatherElement[4].time[0].parameter.parameterName,
-              minTemp: location.weatherElement[2].time[0].parameter.parameterName,
+              weather:
+                  location.weatherElement[0].time[0].parameter.parameterName,
+              maxTemp:
+                  location.weatherElement[4].time[0].parameter.parameterName,
+              minTemp:
+                  location.weatherElement[2].time[0].parameter.parameterName,
               pop: location.weatherElement[1].time[0].parameter.parameterName
             },
             forecast: '',  // 前端 API 模式不顯示預報
@@ -233,7 +243,7 @@ window.onload = function() {
   }
 
   // 顯示天氣資訊的函式
-function displayWeatherInfo(location) {
+  function displayWeatherInfo(location) {
     const timestamp = location.timestamp;
     const city = location.city;
     const currentWeather = location.currentWeather;
@@ -241,10 +251,11 @@ function displayWeatherInfo(location) {
     const advice = location.advice || '無建議資訊';
 
     // 處理預報資訊：將字串以分號分割並格式化
-    const formattedForecast = forecast.split('；')
-        .filter(item => item.trim() !== '')
-        .map(item => `<p class="light-font">${marked.parse(item)}</p>`)
-        .join('');
+    const formattedForecast =
+        forecast.split('；')
+            .filter(item => item.trim() !== '')
+            .map(item => `<p class="light-font">${marked.parse(item)}</p>`)
+            .join('');
 
     // 修改預報和建議的顯示邏輯
     const showForecast = !useFrontendApi && forecast;
@@ -256,15 +267,17 @@ function displayWeatherInfo(location) {
         <div id="weather-container">
           <h3 class="light-font"> ${city} </h3>
           
-          ${!useFrontendApi ? `
+          ${
+        !useFrontendApi ? `
           <div class="toggle-container">
             <label class="switch">
               <input type="checkbox" id="toggle-weather">
               <span class="slider round"></span>
             </label>
-            <span class="toggle-label">切換天氣顯示</span>
+            <span class="light-font">切換天氣顯示</span>
           </div>
-          ` : ''}
+          ` :
+                          ''}
 
           <div id="current-weather">
             <p class="light-font">天氣描述: ${currentWeather.weather}</p>
@@ -272,32 +285,37 @@ function displayWeatherInfo(location) {
             <p class="light-font">最低溫度: ${currentWeather.minTemp}°C</p>
             <p class="light-font">降雨機率: ${currentWeather.pop}%</p>
             <p class="light-font">時間戳記: ${timestamp}</p>
-            ${showAdvice ? `<div class="light-font advice-content">建議: ${marked.parse(advice)}</div>` : ''}
+            ${
+        showAdvice ? `<div class="light-font advice-content">建議: ${
+                         marked.parse(advice)}</div>` :
+                     ''}
           </div>
 
-          ${showForecast ? `
+          ${
+        showForecast ? `
           <div id="forecast-weather" style="display: none;">
             <h3 class="light-font">未來天氣預報</h3>
             <div class="forecast-content light-font">${formattedForecast}</div>
           </div>
-          ` : ''}
+          ` :
+                       ''}
         </div>
       </div> 
     `);
 
-    // 只在後端 API 模式下添加切換事件監聽器
-    if (!useFrontendApi) {
-      $('#toggle-weather').on('change', function() {
-        if(this.checked) {
-          $('#current-weather').hide();
-          $('#forecast-weather').show();
-        } else {
-          $('#forecast-weather').hide();
-          $('#current-weather').show();
+        // 只在後端 API 模式下添加切換事件監聽器
+        if (!useFrontendApi) {
+          $('#toggle-weather').on('change', function() {
+            if (this.checked) {
+              $('#current-weather').hide();
+              $('#forecast-weather').show();
+            } else {
+              $('#forecast-weather').hide();
+              $('#current-weather').show();
+            }
+          });
         }
-      });
-    }
-}
+  }
 
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
