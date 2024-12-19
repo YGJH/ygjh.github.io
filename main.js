@@ -176,7 +176,7 @@ window.onload = function() {
 
   async function fetchWeatherInfoFromBackend() {
     const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
-    console.log(cityName);
+    // const apiUrl = `http://localhost:3000/weather`;
     // 添加載入動畫
     $('#board').html(
         `<div class="loading-container"><div class="loading-spinner"></div><p class="${(mode === 'light-font')?'dark-font':'light-font'}">正在取得天氣資訊...</p></div>`);
@@ -188,7 +188,6 @@ window.onload = function() {
       contentType: 'application/json',
       dataType: 'json',
       success: (data) => {
-        console.log(data);
         displayWeatherInfo(data);
         localStorage.setItem('city', cityName);
       },
@@ -207,7 +206,7 @@ window.onload = function() {
     try {
       if (useFrontendApi) {
         // 使用前端 API
-        const main_apiUrl =
+        const main_apiUrl = 
             'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15';
         const data = await $.get(main_apiUrl);
         const location =
@@ -320,10 +319,8 @@ window.onload = function() {
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-      console.log(latitude, longitude);
-      // const backendUrl =
-      // 'https://backend-bb-1af6d7085259.herokuapp.com/weather';
-      const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
+      const backendUrl = //'http://localhost:3000/weather';
+      'https://backend-test-sic9.onrender.com/weather';
       const response = await $.ajax({
         url: backendUrl,
         method: 'GET',
