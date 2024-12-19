@@ -57,7 +57,7 @@ window.onload = function() {
         if (cityName) {
           await fetchWeatherInfo(cityName);
         }
-      }, 300000);
+      }, 30000000);
     } else {
       // 如果沒有存儲的城市，請求使用者地理位置
       requestUserLocation();
@@ -166,7 +166,7 @@ window.onload = function() {
         if (cityName) {
           await fetchWeatherInfo(cityName);
         }
-      }, 300000);
+      }, 30000000);
 
       return false;
     });
@@ -197,7 +197,7 @@ window.onload = function() {
         clearInterval(weatherIntervalId);
         $('#board').html('<p class="info">無法取得天氣資訊。</p>');
       },
-      timeout: 500000
+      timeout: 50000000  // 設定超時為5000毫秒（50秒）
     });
   }
 
@@ -344,7 +344,7 @@ window.onload = function() {
           if (cityName) {
             await fetchWeatherInfo(cityName);
           }
-        }, 300000);
+        }, 30000000);
         $('#board').removeClass('loading');
 
         return null;
