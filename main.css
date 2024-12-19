@@ -17,7 +17,6 @@
         width: 100%;
         align-items: center;
         padding: 30px;
-        margin-top: 150px;
         border: solid 1px rgb(0, 0, 0);
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5), 0 0 10px 0 rgba(0, 0, 0, 0.5);
         border-radius: 10px;
@@ -219,7 +218,24 @@
     right: 3%;
 }
 
+/* 新增的API切換按鈕樣式 */
+#api-toggle-container {
+    position: fixed;
+    top: 20px;
+    right: 8%;  /* 調整位置，避免與深色模式按鈕重疊 */
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+    gap: 10px;
+}
 
+#api-toggle-container .switch {
+    margin-right: 10px;
+}
+
+#api-toggle-container .toggle-label {
+    white-space: nowrap;
+}
 
 /* 選單圖標的樣式，可以調整大小和顏色 */
 #menu-button i {
@@ -236,8 +252,6 @@
 .popup-menu-light {
     background-color: rgba(255, 255, 255, 0.8);
 }
-
-
 
 /* 選單的樣式 */
 #popup-menu {
@@ -264,24 +278,30 @@
     background-color: rgba(211, 211, 211, 0.8);
 }
 
+body{
+    overflow-y: auto;
+}
+
 #background-menu {
-    position: fixed;
-    width: 1000em;
-    left: -10px;
-    height: 100px;
-    top: -30px;
+    position: fixed;  /* 改為 fixed */
+    width: 100%;     /* 改為 100% */
+    left: 0;         /* 改為 0 */
+    height: 80px;    /* 調整高度 */
+    top: 0;          /* 改為 0 */
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
     border: solid 2px rgb(68, 68, 68);
+    z-index: 100;    /* 確保在最上層 */
 }
 
 #board {
     position: fixed;
-    top: 35%;
+    top: 12px;      /* 調整上方間距，確保不會被 background-menu 遮擋 */
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0); /* 移除 -50% 的垂直位移 */
     width: 80%;
     display: flex;
     flex-direction: row;
+    margin-top: 0;   /* 移除原本的 margin-top */
 }
 
 #board.loading {
@@ -330,7 +350,6 @@
     display: none;
 }
 
-
 .info {
     color: white;
     font-family: sans-serif;
@@ -338,7 +357,6 @@
     margin-top: 50%;
     margin-left: 50%;
 }
-
 
 .info:first-child {
     color: white;
@@ -384,7 +402,6 @@
         transform: rotate(360deg);
     }
 }
-
 
 .toggle-container {
     display: flex;
@@ -446,4 +463,39 @@ input:checked+.slider:before {
 
 .forecast-day {
     margin-bottom: 10px;
+}
+
+/* Markdown 內容樣式 */
+.advice-content, .forecast-content {
+    line-height: 1.6;
+    word-wrap: break-word;
+}
+
+.advice-content p, .forecast-content p {
+    margin-bottom: 1em;
+}
+
+.advice-content ul, .forecast-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 1em;
+}
+
+.advice-content ol, .forecast-content ol {
+    list-style-type: decimal;
+    margin-left: 20px;
+    margin-bottom: 1em;
+}
+
+.advice-content a, .forecast-content a {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+.advice-content strong, .forecast-content strong {
+    font-weight: bold;
+}
+
+.advice-content em, .forecast-content em {
+    font-style: italic;
 }
