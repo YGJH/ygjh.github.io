@@ -325,7 +325,7 @@ window.onload = function() {
         url: backendUrl,
         method: 'GET',
         data: {latitude: latitude, longitude: longitude},
-        timeout: 500000  // 設定超時為5000毫秒（50秒）
+        timeout: 50000  // 設定超時為5000毫秒（50秒）
       });
       if (response && response.city) {
         cityName = response.city;
