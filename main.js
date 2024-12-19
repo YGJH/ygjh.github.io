@@ -173,6 +173,9 @@ window.onload = function() {
   async function fetchWeatherInfoFromBackend() {
     const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
     console.log(cityName);
+    // 添加載入動畫
+    $('#board').html('<div class="loading-container"><div class="loading-spinner"></div><p class="loading-text light-font">正在取得天氣資訊...</p></div>');
+    
     await $.ajax({
       url: apiUrl,
       type: 'POST',
