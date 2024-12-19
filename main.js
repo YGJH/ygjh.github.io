@@ -330,7 +330,6 @@ window.onload = function() {
         data: {latitude: latitude, longitude: longitude},
         timeout: 500000  // 設定超時為5000毫秒（50秒）
       });
-      console.log(response);
       if (response && response.city) {
         cityName = response.city;
         displayWeatherInfo(response);
