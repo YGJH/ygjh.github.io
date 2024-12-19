@@ -177,6 +177,7 @@ window.onload = function() {
   async function fetchWeatherInfoFromBackend() {
     const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
     // const apiUrl = `http://localhost:3000/weather`;
+
     // 添加載入動畫
     $('#board').html(
         `<div class="loading-container"><div class="loading-spinner"></div><p class="${(mode === 'light-font')?'dark-font':'light-font'}">正在取得天氣資訊...</p></div>`);
@@ -237,7 +238,7 @@ window.onload = function() {
       }
     } catch (error) {
       console.error(error);
-      $('#board').html('<p class="info">無法取得天氣資訊。</p>');
+      $('#board').html(`<p class="info ${(mode === 'light-font')?'dark-font':'light-font'}">無法取得天氣資訊。</p>`);
     }
   }
 
@@ -319,7 +320,8 @@ window.onload = function() {
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-      const backendUrl = //'http://localhost:3000/weather';
+      // const backendUrl = 'http://localhost:3000/weather';
+      const backendUrl =
       'https://backend-test-sic9.onrender.com/weather';
       const response = await $.ajax({
         url: backendUrl,
