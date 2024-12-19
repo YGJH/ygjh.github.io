@@ -25,7 +25,7 @@ window.onload = function() {
         <input type="checkbox" id="api-toggle">
         <span class="slider round"></span>
       </label>
-      <span class="toggle-label light-font">前端 API</span>
+      <span class="toggle-label light-font">快速回應</span>
     </div>
   `;
   headerElement.insertAdjacentHTML('beforeend', apiToggleHtml);

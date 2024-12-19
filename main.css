@@ -110,7 +110,7 @@
     width: fit-content;
     align-items: center;
     padding: 30px;
-    margin-top: 150px;
+    margin: 0 auto;     /* 水平置中 */
     border: solid 1px rgb(0, 0, 0);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5), 0 0 10px 0 rgba(0, 0, 0, 0.5);
     border-radius: 10px;
@@ -164,14 +164,11 @@
 }
 
 #container {
-    height: 1000em;
-    width: 1000em;
-    position: fixed;
-    top: -10px;
-    left: -10px;
-    z-index: -1;
-    display: flex;
-    flex-direction: column;
+    min-height: 100vh;  /* 改為最小高度 */
+    width: 100%;        /* 改為 100% */
+    position: relative; /* 改為 relative */
+    padding-top: 80px;  /* 為頂部選單留出空間 */
+    overflow-y: auto;
 }
 
 
@@ -222,19 +219,20 @@
 #api-toggle-container {
     position: fixed;
     top: 20px;
-    right: 8%;  /* 調整位置，避免與深色模式按鈕重疊 */
+    right: 150px;  /* 調整為固定距離 */
     display: flex;
     align-items: center;
-    margin-left: 50px;
-    gap: 10px;
-}
-
-#api-toggle-container .switch {
-    margin-right: 10px;
+    z-index: 100;
 }
 
 #api-toggle-container .toggle-label {
     white-space: nowrap;
+    margin-right: 10px;  /* 增加右邊距 */
+    font-size: 14px;     /* 稍微縮小字體 */
+}
+
+#api-toggle-container .switch {
+    margin-right: 10px;
 }
 
 /* 選單圖標的樣式，可以調整大小和顏色 */
@@ -280,6 +278,9 @@
 
 body{
     overflow-y: auto;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #background-menu {
@@ -294,14 +295,17 @@ body{
 }
 
 #board {
-    position: fixed;
-    top: 12px;      /* 調整上方間距，確保不會被 background-menu 遮擋 */
+    position: relative; /* 改為 relative */
+    top: 0;
     left: 50%;
-    transform: translate(-50%, 0); /* 移除 -50% 的垂直位移 */
+    transform: translateX(-50%);
     width: 80%;
     display: flex;
     flex-direction: row;
-    margin-top: 0;   /* 移除原本的 margin-top */
+    margin-top: 120px;   /* 增加上方間距 */
+    margin-bottom: 20px;/* 添加下方間距 */
+    justify-content: center; /* 水平置中 */
+    align-items: center;     /* 垂直置中 */
 }
 
 #board.loading {
@@ -329,13 +333,13 @@ body{
 }
 
 #popup-menu::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(29, 29, 29, 0.1);
     /* 滾輪軌道的背景色 */
     border-radius: 4px;
 }
 
 #popup-menu::-webkit-scrollbar-thumb {
-    background: rgba(180, 180, 180, 0.5);
+    background: rgba(39, 39, 39, 0.5);
     /* 滾輪滑塊的顏色 */
     border-radius: 4px;
 }
@@ -343,6 +347,50 @@ body{
 #popup-menu::-webkit-scrollbar-thumb:hover {
     background: rgba(22, 22, 22, 0.7);
     /* 當滑鼠懸停時的顏色 */
+}
+
+/* 全域滾動條樣式 */
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: rgba(0, 0, 0, 0.2);  /* 加深背景 */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(30, 30, 30, 0.8);  /* 加深滑塊顏色 */
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(20, 20, 20, 0.9);  /* 加深懸停時的顏色 */
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);  /* 略微加深軌道背景 */
+    border-radius: 10px;
+}
+
+/* 容器特定滾動條樣式 */
+#container::-webkit-scrollbar {
+    width: 12px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#container::-webkit-scrollbar-thumb {
+    background-color: rgba(30, 30, 30, 0.8);
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    background-clip: padding-box;
+}
+
+#container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(20, 20, 20, 0.9);
+}
+
+#container::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 /* 隱藏選單 */
