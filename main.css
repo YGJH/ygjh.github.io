@@ -264,7 +264,7 @@
     /* 添加這行，調整與按鈕的距離 */
     border-radius: 5px;
     left: -2px;
-    top: 20px;
+    top: 30px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 
