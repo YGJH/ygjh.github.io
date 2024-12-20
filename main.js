@@ -9,6 +9,8 @@ window.onload = function() {
   const menuBackground = document.querySelector('#background-menu');
   const darkModeButton = document.querySelector('#dark-mode');
   const lightModeButton = document.querySelector('#light-mode');
+  const locationButton = document.querySelector('#location-button');
+
   // 如果 localStorage 中有 city 鍵值，則將 cityName 設為該值
   // 否則 cityName 保持為 null
   let cityName = '';
@@ -58,9 +60,6 @@ window.onload = function() {
           await fetchWeatherInfo(cityName);
         }
       }, 30000000);
-    } else {
-      // 如果沒有存儲的城市，請求使用者地理位置
-      requestUserLocation();
     }
   }
   init();
@@ -93,6 +92,8 @@ window.onload = function() {
     });
     popupMenu.classList.remove('light-background');
     popupMenu.classList.add('dark-background');
+    locationButton.classList.add('light-font');
+    locationButton.classList.remove('dark-font');
   }
 
   function setLightMode() {
@@ -119,6 +120,8 @@ window.onload = function() {
     });
     popupMenu.classList.add('light-background');
     popupMenu.classList.remove('dark-background');
+    locationButton.classList.remove('light-font');
+    locationButton.classList.add('dark-font');
   }
 
 
@@ -300,7 +303,6 @@ window.onload = function() {
     const currentWeather = location.currentWeather;
     const forecast = location.forecast;
     const advice = location.advice || '無建議資訊';
-    console.log(location);
     // 處理預報資訊：將字串以分號分割並格式化
     let formattedForecast = '';
 
@@ -362,7 +364,6 @@ window.onload = function() {
         </div>
       </div> 
     `);
-    console.log(formattedForecast);
     // 只在後端 API 模式下添加切換事件監聽器
     if (showForecast) {
       $('#toggle-weather').on('change', function() {
@@ -440,4 +441,12 @@ window.onload = function() {
       });
     }
   }
+
+  // 添加定位按鈕事件監聽器
+  locationButton.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (confirm('是否允許獲取您的位置資訊？')) {
+      await requestUserLocation();
+    }
+  });
 }
