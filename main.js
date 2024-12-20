@@ -404,7 +404,6 @@ window.onload = function() {
         data: {latitude: latitude, longitude: longitude , useFrontendApi: useFrontendApi},
         timeout: 50000  // 設定超時為5000毫秒（50秒）
       });
-      console.log(response);
       if (response && response.city && !useFrontendApi) {
         cityName = response.city;
         displayWeatherInfo(response);
