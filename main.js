@@ -61,6 +61,19 @@ window.onload = function() {
         }
       }, 30000000);
     }
+    else {
+        cityName = '臺北市';
+        fetchWeatherInfo();
+        if (weatherIntervalId) {
+          clearInterval(weatherIntervalId);
+        }
+        // 設置新的定時器
+        weatherIntervalId = setInterval(async () => {
+          if (cityName) {
+            await fetchWeatherInfo(cityName);
+          }
+        }, 30000000);
+    }
   }
   init();
 
@@ -430,9 +443,12 @@ window.onload = function() {
   // 修改後的 requestUserLocation 函式
   async function requestUserLocation() {
     if (navigator.geolocation) {
-      // 顯示載入指示器
-      $('#board').addClass('loading').html(
-          '<div class="loading-spinner"></div>');
+    // 添加載入動畫
+    $('#board').html(
+      `<div class="loading-container"><div class="loading-spinner"></div><p class="${
+          (mode === 'light-font') ?
+              'dark-font' :
+              'light-font'}">正在取得天氣資訊...</p></div>`);
 
       navigator.geolocation.getCurrentPosition(async (position) => {
         const latitude = position.coords.latitude;
