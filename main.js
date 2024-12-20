@@ -213,7 +213,9 @@ window.onload = function() {
       error: () => {
         cityName = '';
         clearInterval(weatherIntervalId);
-        $('#board').html('<p class="info">無法取得天氣資訊。</p>');
+        $('#board').html(`<p class="info  ${(mode === 'light-font') ?
+                'dark-font' :
+                'light-font'}">無法取得天氣資訊。</p>`);
       },
       timeout: 50000000  // 設定超時為5000毫秒（50秒）
     });
