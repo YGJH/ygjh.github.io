@@ -45,7 +45,7 @@
 
     #menu-button {
         position: fixed;
-        padding-top: 6px;
+        padding: 6px;
         top: 20px;
         left: 20px;
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5), 0 0 10px 0 rgba(0, 0, 0, 0.5);
@@ -181,7 +181,7 @@
 /* 將選單按鈕固定在左上角 */
 #menu-button {
     position: fixed;
-    padding-top: 6px;
+    padding: 6px;
     top: 20px;
     left: 40px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5), 0 0 10px 0 rgba(0, 0, 0, 0.5);
@@ -241,7 +241,7 @@
     position: fixed;
     top: 20px;
     left: 100px;  /* 修改：調整位置到選單按鈕右邊 */
-    padding: 5px;
+    padding: 6px;
     background-color: transparent;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
     border: solid 1px rgb(0, 0, 0);
@@ -251,14 +251,14 @@
 }
 
 #location-button i {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
 }
 
 /* 選單圖標的樣式，可以調整大小和顏色 */
 #menu-button i {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     stroke: #030303;
     z-index: inherit;
 }
@@ -289,7 +289,7 @@
 
 /* 調整城市按鈕的容器樣式 */
 .city-button:last-child {
-    margin-bottom: 10px; /* 為最後一個按鈕增加底部間距 */
+    margin-bottom: 1px; /* 為最後一個按鈕增加底部間距 */
 }
 
 .background-menu-light {
