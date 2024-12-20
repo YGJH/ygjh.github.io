@@ -46,7 +46,7 @@ window.onload = function() {
     } else {
       setLightMode();
     }
-    
+
     // 新增網站介紹在初始畫面
     $('#board').html(`
       <div id="weather-info" class="gray-background">
@@ -321,10 +321,11 @@ window.onload = function() {
 
     const temp = forecast.split('；');
     for (let i = 0; i < temp.length; i++) {
-      formattedForecast += `<div class='forecast-content'><p class="light-font">`;
-      const ttemp = temp[i].split('，'); 
+      formattedForecast +=
+          `<div class='forecast-content'><p class="light-font">`;
+      const ttemp = temp[i].split('，');
       for (let j = 0; j < ttemp.length; j++) {
-        if(ttemp[j].length < 3) continue;
+        if (ttemp[j].length < 3) continue;
         formattedForecast += `
         ${(ttemp[j])}</br>
       `;
@@ -398,10 +399,11 @@ window.onload = function() {
       const response = await $.ajax({
         url: backendUrl,
         method: 'GET',
-        data: {latitude: latitude, longitude: longitude},
+        data: {latitude: latitude, longitude: longitude , useFrontendApi: useFrontendApi},
         timeout: 50000  // 設定超時為5000毫秒（50秒）
       });
-      if (response && response.city) {
+      console.log(response);
+      if (response && response.city && !useFrontendApi) {
         cityName = response.city;
         displayWeatherInfo(response);
         localStorage.setItem('city', cityName);
@@ -419,13 +421,16 @@ window.onload = function() {
         $('#board').removeClass('loading');
 
         return null;
+      } else if(response && response.city && useFrontendApi) {
+        cityName = response.city;
+        fetchWeatherInfo();
       } else {
-        console.error('無法從後端取得縣市名稱');
-        $('#board').html('<p class="info">無法偵測到您的城市位置。</p>');
-        console.error('Geolocation error:', error);
-        $('#board').html('<p class="info">無法取得您的地理位置權限。</p>');
-        $('#board').removeClass('loading');
-        return null;
+      console.error('無法從後端取得縣市名稱');
+      $('#board').html('<p class="info">無法偵測到您的城市位置。</p>');
+      console.error('Geolocation error:', error);
+      $('#board').html('<p class="info">無法取得您的地理位置權限。</p>');
+      $('#board').removeClass('loading');
+      return null;
       }
     } catch (error) {
       if (error.statusText === 'timeout') {
@@ -442,12 +447,12 @@ window.onload = function() {
   // 修改後的 requestUserLocation 函式
   async function requestUserLocation() {
     if (navigator.geolocation) {
-    // 添加載入動畫
-    $('#board').html(
-      `<div class="loading-container"><div class="loading-spinner"></div><p class="${
-          (mode === 'light-font') ?
-              'dark-font' :
-              'light-font'}">正在取得天氣資訊...</p></div>`);
+      // 添加載入動畫
+      $('#board').html(
+          `<div class="loading-container"><div class="loading-spinner"></div><p class="${
+              (mode === 'light-font') ?
+                  'dark-font' :
+                  'light-font'}">正在取得天氣資訊...</p></div>`);
 
       navigator.geolocation.getCurrentPosition(async (position) => {
         const latitude = position.coords.latitude;
