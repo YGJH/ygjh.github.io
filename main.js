@@ -68,11 +68,11 @@ window.onload = function() {
     `);
 
     // 檢查是否有儲存的城市，如果有則獲取天氣資訊
-    const storedCity = localStorage.getItem('city');
-    if (storedCity) {
-      cityName = storedCity;
-      fetchWeatherInfo();
-    }
+    // const storedCity = localStorage.getItem('city');
+    // if (storedCity) {
+    //   cityName = storedCity;
+    //   fetchWeatherInfo();
+    // }
   }
   init();
 
@@ -402,6 +402,7 @@ window.onload = function() {
         data: {latitude: latitude, longitude: longitude , useFrontendApi: useFrontendApi},
         timeout: 50000  // 設定超時為5000毫秒（50秒）
       });
+      console.log(response);
       if (response && response.city && !useFrontendApi) {
         cityName = response.city;
         displayWeatherInfo(response);
