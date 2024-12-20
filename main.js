@@ -16,14 +16,14 @@ window.onload = function() {
   let cityName = '';
 
   // 新增API來源切換狀態
-  let useFrontendApi = false;
+  let useFrontendApi = true;
 
   // 在初始化時新增切換按鈕
   const headerElement = document.querySelector('#background-menu');
   const apiToggleHtml = `
   <div id="api-toggle-container">
   <label class="switch">
-  <input type="checkbox" id="api-toggle">
+  <input type="checkbox" id="api-toggle" checked>
         <span class="slider round"></span>
         </label>
       <span class="toggle-label">快速回應</span>
