@@ -46,33 +46,32 @@ window.onload = function() {
     } else {
       setLightMode();
     }
-    const storedCity = localStorage.getItem('city') || null;
+    
+    // 新增網站介紹在初始畫面
+    $('#board').html(`
+      <div id="weather-info" class="gray-background">
+        <img src="assets\\1779940.png" style="width: 200px; height: 200px;">
+        <div id="intro-container">
+          <h2 class="light-font">歡迎使用天氣查詢服務</h2>
+          <div class="intro-content">
+            <p class="light-font">使用說明：</p>
+            <ul class="light-font">
+              <li>點擊左上角選單可選擇城市</li>
+              <li>點擊定位圖示可獲取當前位置天氣</li>
+              <li>切換右上角快速回應開關可改變資料來源</li>
+              <li>使用右上角主題按鈕可切換深淺色模式</li>
+            </ul>
+            <p class="light-font">請選擇城市開始使用！</p>
+          </div>
+        </div>
+      </div>
+    `);
+
+    // 檢查是否有儲存的城市，如果有則獲取天氣資訊
+    const storedCity = localStorage.getItem('city');
     if (storedCity) {
       cityName = storedCity;
       fetchWeatherInfo();
-      if (weatherIntervalId) {
-        clearInterval(weatherIntervalId);
-      }
-
-      // 設置新的定時器
-      weatherIntervalId = setInterval(async () => {
-        if (cityName) {
-          await fetchWeatherInfo(cityName);
-        }
-      }, 30000000);
-    }
-    else {
-        cityName = '臺北市';
-        fetchWeatherInfo();
-        if (weatherIntervalId) {
-          clearInterval(weatherIntervalId);
-        }
-        // 設置新的定時器
-        weatherIntervalId = setInterval(async () => {
-          if (cityName) {
-            await fetchWeatherInfo(cityName);
-          }
-        }, 30000000);
     }
   }
   init();
