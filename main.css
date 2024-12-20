@@ -122,6 +122,7 @@
     flex-direction: column;
     float: left;
     padding: 30px;
+    gap: 10px;
 }
 
 #weather-container h3 {
@@ -256,16 +257,20 @@
     position: fixed;
     padding: 10px;
     width: 200px;
-    max-height: 100%;
+    max-height: calc(100vh - 150px); /* 調整最大高度，扣除頂部和底部空間 */
     overflow-y: auto;
     margin-top: 50px;
-    /* 添加這行，調整與按鈕的距離 */
     z-index: 40;
-    /* 添加這行，調整與按鈕的距離 */
     border-radius: 5px;
     left: -2px;
     top: 30px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    padding-bottom: 20px; /* 增加底部padding */
+}
+
+/* 調整城市按鈕的容器樣式 */
+.city-button:last-child {
+    margin-bottom: 10px; /* 為最後一個按鈕增加底部間距 */
 }
 
 .background-menu-light {
@@ -565,4 +570,38 @@ input:checked+.slider:before {
 
 .advice-content em, .forecast-content em {
     font-style: italic;
+}
+
+/* 天氣預報區塊樣式 */
+#forecast-weather {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+#forecast-weather h3 {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.forecast-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.forecast-content p {
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.forecast-content p:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
 }

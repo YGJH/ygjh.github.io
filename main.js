@@ -180,7 +180,10 @@ window.onload = function() {
 
     // 添加載入動畫
     $('#board').html(
-        `<div class="loading-container"><div class="loading-spinner"></div><p class="${(mode === 'light-font')?'dark-font':'light-font'}">正在取得天氣資訊...</p></div>`);
+        `<div class="loading-container"><div class="loading-spinner"></div><p class="${
+            (mode === 'light-font') ?
+                'dark-font' :
+                'light-font'}">正在取得天氣資訊...</p></div>`);
 
     await $.ajax({
       url: apiUrl,
@@ -204,15 +207,57 @@ window.onload = function() {
 
   // 定義取得並顯示天氣資訊的函式
   async function fetchWeatherInfo() {
-    try {
-      if (useFrontendApi) {
-        // 使用前端 API
-        const main_apiUrl = 
+    if (useFrontendApi) {
+      // 使用前端 API
+      try {
+        const forecastApiUrl =
+            'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-089?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15'
+        const main_apiUrl =
             'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-EBC821F3-9782-4630-8E87-87FF25933C15';
         const data = await $.get(main_apiUrl);
         const location =
             data.records.location.find(loc => loc.locationName === cityName);
-
+        const forecastWeather = await $.get(forecastApiUrl);
+        const forecastLocation =
+            forecastWeather.records.Locations[0].Location.find(
+                (loc) => loc.LocationName === cityName);
+        const forecastElements = forecastLocation.WeatherElement;
+        // 找出天氣現象和綜合描述的資料
+        const wxElement = forecastElements.find(
+            element => element.ElementName === '天氣現象');
+        const weatherDescElement = forecastElements.find(
+            element => element.ElementName === '天氣預報綜合描述');
+        const tempElement =
+            forecastElements.find(element => element.ElementName === '溫度');
+        const feelsTempElement = forecastElements.find(
+            element => element.ElementName === '體感溫度');
+        const forecastWx = [];
+        for (let i = 0; i < wxElement.Time.length;
+             i += 8) {  // 每天取一個時間點
+          const wxTime = wxElement.Time[i];
+          const tempTime = tempElement.Time[i];
+          const weaDesc = weatherDescElement.Time[i];
+          const feelsTempTime = feelsTempElement?.Time[i];
+          if (wxTime && tempTime) {
+            forecastWx.push({
+              date: (wxTime.StartTime) ? wxTime.StartTime.split('T')[0] :
+                                         '無日期',
+              description:
+                  weaDesc.ElementValue[0].WeatherDescription || '無描述',
+              temp: tempTime.ElementValue[0]?.Temperature || '無溫度資料',
+              feelsTemp: feelsTempTime?.ElementValue[0]?.ApparentTemperature ||
+                  '無體感溫度資料'
+            });
+          }
+          if (forecastWx.length >= 3) break;  // 只取三天的資料
+        }
+        const forecastList =
+            forecastWx
+                .map(
+                    forecast => `日期：${forecast.date}，天氣：${
+                        forecast.description}，溫度：${
+                        forecast.temp}°C，體感溫度：${forecast.feelsTemp}°C`)
+                .join('； ');
         if (location) {
           // 轉換資料格式以符合顯示需求
           const weatherData = {
@@ -227,18 +272,24 @@ window.onload = function() {
                   location.weatherElement[2].time[0].parameter.parameterName,
               pop: location.weatherElement[1].time[0].parameter.parameterName
             },
-            forecast: '',  // 前端 API 模式不顯示預報
-            advice: ''     // 前端 API 模式不顯示建議
+            forecast: forecastList,  // 前端 API 模式不顯示預報
+            advice: ''               // 前端 API 模式不顯示建議
           };
-          displayWeatherInfo(weatherData);
+          await displayWeatherInfo(weatherData);
         }
-      } else {
-        // 使用後端 API
+      } catch (error) {
+        console.error('無法從前端 API 獲取天氣資訊：', error);
         await fetchWeatherInfoFromBackend();
       }
-    } catch (error) {
-      console.error(error);
-      $('#board').html(`<p class="info ${(mode === 'light-font')?'dark-font':'light-font'}">無法取得天氣資訊。</p>`);
+    } else {
+      try {
+        await fetchWeatherInfoFromBackend();
+      } catch {
+        console.error(error);
+        $('#board').html(`<p class="info ${
+            (mode === 'light-font') ? 'dark-font' :
+                                      'light-font'}">無法取得天氣資訊。</p>`);
+      }
     }
   }
 
@@ -249,26 +300,36 @@ window.onload = function() {
     const currentWeather = location.currentWeather;
     const forecast = location.forecast;
     const advice = location.advice || '無建議資訊';
-
+    console.log(location);
     // 處理預報資訊：將字串以分號分割並格式化
-    const formattedForecast =
-        forecast.split('；')
-            .filter(item => item.trim() !== '')
-            .map(item => `<p class="light-font">${marked.parse(item)}</p>`)
-            .join('');
+    let formattedForecast = '';
+
+
+    const temp = forecast.split('；');
+    for (let i = 0; i < temp.length; i++) {
+      formattedForecast += `<div class='forecast-content'><p class="light-font">`;
+      const ttemp = temp[i].split('，'); 
+      for (let j = 0; j < ttemp.length; j++) {
+        if(ttemp[j].length < 3) continue;
+        formattedForecast += `
+        ${(ttemp[j])}</br>
+      `;
+      }
+      formattedForecast += '</div>';
+    }
+
+
 
     // 修改預報和建議的顯示邏輯
-    const showForecast = !useFrontendApi && forecast;
-    const showAdvice = !useFrontendApi && advice;
+    const showForecast = forecast;
+    const showAdvice = advice;
 
     $('#board').html(`
       <div id="weather-info" class="gray-background">
         <img src="assets\\1779940.png" style="width: 200px; height: 200px;">
         <div id="weather-container">
           <h3 class="light-font"> ${city} </h3>
-          
-          ${
-        !useFrontendApi ? `
+         
           <div class="toggle-container">
             <label class="switch">
               <input type="checkbox" id="toggle-weather">
@@ -276,8 +337,7 @@ window.onload = function() {
             </label>
             <span class="light-font">切換天氣顯示</span>
           </div>
-          ` :
-                          ''}
+          
 
           <div id="current-weather">
             <p class="light-font">天氣描述: ${currentWeather.weather}</p>
@@ -302,27 +362,26 @@ window.onload = function() {
         </div>
       </div> 
     `);
-
-        // 只在後端 API 模式下添加切換事件監聽器
-        if (!useFrontendApi) {
-          $('#toggle-weather').on('change', function() {
-            if (this.checked) {
-              $('#current-weather').hide();
-              $('#forecast-weather').show();
-            } else {
-              $('#forecast-weather').hide();
-              $('#current-weather').show();
-            }
-          });
+    console.log(formattedForecast);
+    // 只在後端 API 模式下添加切換事件監聽器
+    if (showForecast) {
+      $('#toggle-weather').on('change', function() {
+        if (this.checked) {
+          $('#current-weather').hide();
+          $('#forecast-weather').show();
+        } else {
+          $('#forecast-weather').hide();
+          $('#current-weather').show();
         }
+      });
+    }
   }
 
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
       // const backendUrl = 'http://localhost:3000/weather';
-      const backendUrl =
-      'https://backend-test-sic9.onrender.com/weather';
+      const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
       const response = await $.ajax({
         url: backendUrl,
         method: 'GET',
