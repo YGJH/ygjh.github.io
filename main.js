@@ -35,7 +35,7 @@ window.onload = function() {
   const apiToggle = document.querySelector('#api-toggle');
   apiToggle.addEventListener('change', function() {
     useFrontendApi = this.checked;
-    fetchWeatherInfo();  // 立即重新獲取天氣資訊
+    // fetchWeatherInfo();  // 立即重新獲取天氣資訊
   });
 
   const toggleButton = document.querySelector('.toggle-label');
@@ -166,7 +166,7 @@ window.onload = function() {
     button.addEventListener('click', async (e) => {
       e.preventDefault();
       cityName = button.value;
-      localStorage.setItem('city', cityName);
+      // localStorage.setItem('city', cityName);
 
       await fetchWeatherInfo();
       popupMenu.classList.add('hidden');
@@ -208,7 +208,7 @@ window.onload = function() {
       dataType: 'json',
       success: (data) => {
         displayWeatherInfo(data);
-        localStorage.setItem('city', cityName);
+        // localStorage.setItem('city', cityName);
       },
       error: () => {
         cityName = '';
@@ -406,7 +406,7 @@ window.onload = function() {
       if (response && response.city && !useFrontendApi) {
         cityName = response.city;
         displayWeatherInfo(response);
-        localStorage.setItem('city', cityName);
+        // localStorage.setItem('city', cityName);
 
         if (weatherIntervalId) {
           clearInterval(weatherIntervalId);
