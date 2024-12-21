@@ -190,8 +190,8 @@ window.onload = function() {
 
 
   async function fetchWeatherInfoFromBackend() {
-    const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
-    // const apiUrl = `http://localhost:3000/weather`;
+    // const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
+    const apiUrl = `http://localhost:3000/weather`;
 
     // 添加載入動畫
     $('#board').html(
@@ -396,8 +396,8 @@ window.onload = function() {
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-      // const backendUrl = 'http://localhost:3000/weather';
-      const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
+      const backendUrl = 'http://localhost:3000/weather';
+      // const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
       const response = await $.ajax({
         url: backendUrl,
         method: 'GET',
