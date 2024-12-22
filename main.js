@@ -361,7 +361,7 @@ window.onload = function() {
     }
 
 
-
+    const timestamp = new Date().toLocaleString();
     // 修改預報和建議的顯示邏輯
     const showForecast = forecast;
     const showAdvice = advice;
@@ -386,7 +386,7 @@ window.onload = function() {
             <p class="light-font">最高溫度: ${currentWeather.maxTemp}°C</p>
             <p class="light-font">最低溫度: ${currentWeather.minTemp}°C</p>
             <p class="light-font">降雨機率: ${currentWeather.pop}%</p>
-            <p class="light-font">時間戳記: ${new Date().toLocaleString()}</p>
+            <p class="light-font">時間戳記: ${timestamp}</p>
             ${
         showAdvice ? `<div class="light-font advice-content">建議: ${
                          marked.parse(advice)}</div>` :
