@@ -200,8 +200,8 @@ window.onload = function() {
 
 
   async function fetchWeatherInfoFromBackend() {
-    const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
-    // const apiUrl = `http://localhost:3000/weather`;
+    // const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
+    const apiUrl = `http://localhost:3000/weather`;
 
     // 設定 API 請求的共用設定
     const requestConfig = {
@@ -225,6 +225,7 @@ window.onload = function() {
         type: 'POST',
         data: JSON.stringify({cityName}),
         success: (data) => {
+          console.log('成功取得天氣資訊：', data);
           displayWeatherInfo(data);
         },
         error: (xhr, status, error) => {
@@ -337,7 +338,6 @@ window.onload = function() {
 
   // 顯示天氣資訊的函式
   function displayWeatherInfo(location) {
-    const timestamp = location.timestamp;
     const city = location.city;
     const currentWeather = location.currentWeather;
     const forecast = location.forecast;
@@ -386,7 +386,7 @@ window.onload = function() {
             <p class="light-font">最高溫度: ${currentWeather.maxTemp}°C</p>
             <p class="light-font">最低溫度: ${currentWeather.minTemp}°C</p>
             <p class="light-font">降雨機率: ${currentWeather.pop}%</p>
-            <p class="light-font">時間戳記: ${timestamp}</p>
+            <p class="light-font">時間戳記: ${new Date().toLocaleString()}</p>
             ${
         showAdvice ? `<div class="light-font advice-content">建議: ${
                          marked.parse(advice)}</div>` :
@@ -431,8 +431,8 @@ window.onload = function() {
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-      // const backendUrl = 'http://localhost:3000/weather';
-      const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
+      const backendUrl = 'http://localhost:3000/weather';
+      // const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
       const requestConfig = {
         headers: {
           'X-API-Key': '61a60170273e74a5be90355ffe8e86ad',
@@ -448,15 +448,14 @@ window.onload = function() {
       });
       if (response && response.city && !useFrontendApi) {
         cityName = response.city;
+        console.log(response);
         displayWeatherInfo(response);
-        // localStorage.setItem('city', cityName);
-
-
         $('#board').removeClass('loading');
 
         return null;
       } else if(response && response.city && useFrontendApi) {
         cityName = response.city;
+        console.log(response);
         fetchWeatherInfo();
       } else {
       console.error('無法從後端取得縣市名稱');
