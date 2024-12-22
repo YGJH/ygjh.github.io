@@ -13,7 +13,6 @@ window.onload = function() {
   const homeButton = document.querySelector('#home-button');
   const testtext = document.getElementById('board');
 
-  // 如果 localStorage 中有 city 鍵值，則將 cityName 設為該值
   // 否則 cityName 保持為 null
   let cityName = '';
 
@@ -227,7 +226,7 @@ window.onload = function() {
         type: 'POST',
         data: JSON.stringify({cityName}),
         success: (data) => {
-          console.log('成功取得天氣資訊：', data);
+          // console.log('成功取得天氣資訊：', data);
           displayWeatherInfo(data);
         },
         error: (xhr, status, error) => {
@@ -450,14 +449,14 @@ window.onload = function() {
       });
       if (response && response.city && !useFrontendApi) {
         cityName = response.city;
-        console.log(response);
+        // console.log(response);
         displayWeatherInfo(response);
         $('#board').removeClass('loading');
 
         return null;
       } else if(response && response.city && useFrontendApi) {
         cityName = response.city;
-        console.log(response);
+        // console.log(response);
         fetchWeatherInfo();
       } else {
       console.error('無法從後端取得縣市名稱');
