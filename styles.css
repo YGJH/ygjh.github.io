@@ -183,7 +183,7 @@
     position: fixed;
     padding: 6px;
     top: 20px;
-    left: 40px;
+    left: 80px; /* 調整選單按鈕位置 */
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5), 0 0 10px 0 rgba(0, 0, 0, 0.5);
     background-color: transparent;
     border: solid 1px rgb(0, 0, 0);
@@ -240,7 +240,7 @@
 #location-button {
     position: fixed;
     top: 20px;
-    left: 100px;  /* 修改：調整位置到選單按鈕右邊 */
+    left: 140px;  /* 修改：調整位置到選單按鈕右邊 */
     padding: 6px;
     background-color: transparent;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
@@ -624,3 +624,267 @@ input:checked+.slider:before {
     background-color: rgba(255, 255, 255, 0.15);
     transform: translateX(5px);
 }
+
+
+#github-links {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+  }
+  
+  .github-icon {
+    width: 32px;
+    height: 32px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+  
+  .github-icon:hover {
+    opacity: 1;
+  }
+  
+  /* RWD 調整 */
+  @media screen and (max-width: 768px) {
+    #github-links {
+      bottom: 10px;
+      right: 10px;
+    }
+    
+    .github-icon {
+      width: 28px;
+      height: 28px;
+    }
+  }
+  
+
+  #github-links {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+  }
+  
+  .github-icon {
+    width: 32px;
+    height: 32px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+  }
+  
+  .github-icon:hover {
+    opacity: 1;
+  }
+  
+  /* RWD 調整 */
+  @media screen and (max-width: 768px) {
+    #github-links {
+      bottom: 10px;
+      right: 10px;
+    }
+    
+    .github-icon {
+      width: 28px;
+      height: 28px;
+    }
+  }
+  
+  #github-links {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+  }
+  
+  #github-links a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    color: white;
+    gap: 8px;
+  }
+  
+  #github-links a:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  #github-links span {
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  #github-links a:hover span {
+    opacity: 1;
+  }
+  
+  .github-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+  
+  #github-links a:hover .github-icon {
+    transform: rotate(360deg);
+  }
+  
+  /* RWD 調整 */
+  @media screen and (max-width: 768px) {
+    #github-links {
+      bottom: 10px;
+      right: 10px;
+      gap: 10px;
+    }
+    
+    #github-links a {
+      padding: 6px 10px;
+    }
+  
+    .github-icon {
+      width: 20px;
+      height: 20px;
+    }
+    
+    #github-links span {
+      font-size: 12px;
+    }
+  }
+  
+  #github-links {  position: fixed;  bottom: 20px;  right: 20px;  display: flex;  gap: 15px;  z-index: 1000;}#github-links a {  display: flex;  align-items: center;  text-decoration: none;  background: rgba(0, 0, 0, 0.1);  /* 改為半透明背景 */  padding: 8px 12px;  border-radius: 20px;  transition: all 0.3s ease;  backdrop-filter: blur(5px);  /* 添加模糊效果 */  gap: 8px;}#github-links a.dark-mode {  background: rgba(255, 255, 255, 0.1);  color: white;}#github-links a.light-mode {  background: rgba(0, 0, 0, 0.1);  color: black;}#github-links a:hover {  background: rgba(0, 0, 0, 0.2);  transform: translateY(-2px);  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);}#github-links a.dark-mode:hover {  background: rgba(255, 255, 255, 0.2);}#github-links span {  font-size: 14px;  opacity: 0;  transition: opacity 0.3s ease;  white-space: nowrap;}#github-links a:hover span {  opacity: 1;}.github-icon {  width: 24px;  height: 24px;  transition: transform 0.3s ease;}#github-links a:hover .github-icon {  transform: rotate(360deg);}/* RWD 調整 */@media screen and (max-width: 768px) {  #github-links {    bottom: 10px;    right: 10px;    gap: 10px;  }  
+  #github-links a {
+    padding: 6px 10px;
+  }
+
+  .github-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  #github-links span {
+    font-size: 12px;
+  }
+}
+
+/* 統一按鈕樣式 */
+button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 所有按鈕的基本懸停效果 */
+#menu-button, #location-button, #dark-mode, #light-mode, #home-button {
+    transition: all 0.3s ease;
+    transform-origin: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#menu-button:hover, 
+#location-button:hover, 
+#dark-mode:hover, 
+#light-mode:hover,
+#home-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 按鈕按下效果 */
+#menu-button:active, 
+#location-button:active, 
+#dark-mode:active, 
+#light-mode:active,
+#home-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* 城市按鈕特殊效果 */
+.city-button {
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 20px !important;
+    background: transparent;
+}
+
+.city-button:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: translateX(10px);
+    padding-left: 25px !important;
+    letter-spacing: 1px;
+}
+
+.city-button:active {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* 切換按鈕容器效果 */
+.toggle-container {
+    transition: all 0.3s ease;
+}
+
+.toggle-container:hover .switch {
+    transform: scale(1.05);
+}
+
+.toggle-container:hover .toggle-label {
+    opacity: 0.8;
+}
+
+/* 開關按鈕特效 */
+.switch {
+    transition: all 0.3s ease;
+}
+
+.switch:hover {
+    transform: scale(1.05);
+}
+
+.slider {
+    transition: all 0.3s ease;
+}
+
+.slider:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ...existing code... */
+
+#home-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 7px;
+    background-color: transparent;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    border: solid 1px rgb(0, 0, 0);
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+#home-button:hover {
+    transform: scale(1.1);
+}
+
+#home-button i {
+    width: 30px;
+    height: 30px;
+}
+
+/* ...existing code... */

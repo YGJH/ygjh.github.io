@@ -10,6 +10,7 @@ window.onload = function() {
   const darkModeButton = document.querySelector('#dark-mode');
   const lightModeButton = document.querySelector('#light-mode');
   const locationButton = document.querySelector('#location-button');
+  const homeButton = document.querySelector('#home-button');
 
   // 如果 localStorage 中有 city 鍵值，則將 cityName 設為該值
   // 否則 cityName 保持為 null
@@ -106,6 +107,16 @@ window.onload = function() {
     popupMenu.classList.add('dark-background');
     locationButton.classList.add('light-font');
     locationButton.classList.remove('dark-font');
+    homeButton.classList.add('light-font');
+    homeButton.classList.remove('dark-font');
+    // 更新 GitHub 圖示
+    document.querySelectorAll('.github-icon').forEach(icon => {
+      icon.src = "assets/github-mark-white.svg";
+    });
+    document.querySelectorAll('#github-links a').forEach(link => {
+      link.classList.add('dark-mode');
+      link.classList.remove('light-mode');
+    });
   }
 
   function setLightMode() {
@@ -134,6 +145,16 @@ window.onload = function() {
     popupMenu.classList.remove('dark-background');
     locationButton.classList.remove('light-font');
     locationButton.classList.add('dark-font');
+    homeButton.classList.remove('light-font');
+    homeButton.classList.add('dark-font');
+    // 更新 GitHub 圖示
+    document.querySelectorAll('.github-icon').forEach(icon => {
+      icon.src = "assets/github-mark.svg";
+    });
+    document.querySelectorAll('#github-links a').forEach(link => {
+      link.classList.remove('dark-mode');
+      link.classList.add('light-mode');
+    });
   }
 
 
@@ -187,7 +208,6 @@ window.onload = function() {
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': '61a60170273e74a5be90355ffe8e86ad', // 加入 API 金鑰
-        'User-Agent': navigator.userAgent // 加入 User-Agent
       },
       timeout: 50000
     };
@@ -416,7 +436,6 @@ window.onload = function() {
       const requestConfig = {
         headers: {
           'X-API-Key': '61a60170273e74a5be90355ffe8e86ad',
-          'User-Agent': navigator.userAgent
         },
         timeout: 50000
       };
@@ -483,5 +502,38 @@ window.onload = function() {
     if (confirm('是否允許獲取您的位置資訊？')) {
       await requestUserLocation();
     }
+  });
+
+  // 添加 Home 按鈕點擊事件
+  homeButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    // 隱藏選單（如果已開啟）
+    popupMenu.classList.add('hidden');
+    // 重置狀態
+    cityName = '';
+    // 清除更新定時器
+    if (weatherIntervalId) {
+      clearInterval(weatherIntervalId);
+      weatherIntervalId = null;
+    }
+    // 返回初始介紹畫面
+    $('#board').html(`
+      <div id="weather-info" class="gray-background">
+        <img src="assets\\1779940.png" style="width: 200px; height: 200px;">
+        <div id="intro-container">
+          <h2 class="light-font">歡迎使用天氣查詢服務</h2>
+          <div class="intro-content">
+            <p class="light-font">使用說明：</p>
+            <ul class="light-font">
+              <li>點擊左上角選單可選擇城市</li>
+              <li>點擊定位圖示可獲取當前位置天氣</li>
+              <li>切換右上角快速回應開關可改變資料來源</li>
+              <li>使用右上角主題按鈕可切換深淺色模式</li>
+            </ul>
+            <p class="light-font">請選擇城市開始使用！</p>
+          </div>
+        </div>
+      </div>
+    `);
   });
 }
