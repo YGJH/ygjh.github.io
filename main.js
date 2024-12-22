@@ -179,35 +179,50 @@ window.onload = function() {
 
 
   async function fetchWeatherInfoFromBackend() {
-    const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
-    // const apiUrl = `http://localhost:3000/weather`;
+    // const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
+    const apiUrl = `http://localhost:3000/weather`;
+
+    // 設定 API 請求的共用設定
+    const requestConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': '61a60170273e74a5be90355ffe8e86ad', // 加入 API 金鑰
+        'User-Agent': navigator.userAgent // 加入 User-Agent
+      },
+      timeout: 50000
+    };
 
     // 添加載入動畫
     $('#board').html(
         `<div class="loading-container"><div class="loading-spinner"></div><p class="${
-            (mode === 'light-font') ?
-                'dark-font' :
-                'light-font'}">正在取得天氣資訊...</p></div>`);
+            (mode === 'light-font') ? 'dark-font' : 'light-font'
+        }">正在取得天氣資訊...</p></div>`);
 
-    await $.ajax({
-      url: apiUrl,
-      type: 'POST',
-      data: JSON.stringify({cityName}),
-      contentType: 'application/json',
-      dataType: 'json',
-      success: (data) => {
-        displayWeatherInfo(data);
-        // localStorage.setItem('city', cityName);
-      },
-      error: () => {
-        cityName = '';
-        clearInterval(weatherIntervalId);
-        $('#board').html(`<p class="info  ${(mode === 'light-font') ?
-                'dark-font' :
-                'light-font'}">無法取得天氣資訊。</p>`);
-      },
-      timeout: 50000000  // 設定超時為5000毫秒（50秒）
-    });
+    try {
+      const response = await $.ajax({
+        ...requestConfig,
+        url: apiUrl,
+        type: 'POST',
+        data: JSON.stringify({cityName}),
+        success: (data) => {
+          displayWeatherInfo(data);
+        },
+        error: (xhr, status, error) => {
+          cityName = '';
+          let errorMessage = '無法取得天氣資訊';
+          if (xhr.status === 401) {
+            errorMessage = '未授權的請求';
+          } else if (xhr.status === 403) {
+            errorMessage = '請求被拒絕';
+          } else if (xhr.status === 429) {
+            errorMessage = '請求次數過多，請稍後再試';
+          }
+          $('#board').html(`<p class="info ${(mode === 'light-font') ? 'dark-font' : 'light-font'}">${errorMessage}</p>`);
+        }
+      });
+    } catch (error) {
+      console.error('請求錯誤：', error);
+    }
   }
 
 
@@ -390,19 +405,27 @@ window.onload = function() {
       if (cityName) {
         await fetchWeatherInfo(cityName);
       }
-    }, 3000000);  // 每30分鐘更新一次
+    }, 1800000);  // 每30分鐘更新一次
   }
 
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-      // const backendUrl = 'http://localhost:3000/weather';
-      const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
+      const backendUrl = 'http://localhost:3000/weather';
+      // const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
+      const requestConfig = {
+        headers: {
+          'X-API-Key': '61a60170273e74a5be90355ffe8e86ad',
+          'User-Agent': navigator.userAgent
+        },
+        timeout: 50000
+      };
+
       const response = await $.ajax({
+        ...requestConfig,
         url: backendUrl,
         method: 'GET',
         data: {latitude: latitude, longitude: longitude , useFrontendApi: useFrontendApi},
-        timeout: 500000  // 設定超時為5000毫秒（50秒）
       });
       if (response && response.city && !useFrontendApi) {
         cityName = response.city;
