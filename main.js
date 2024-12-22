@@ -11,6 +11,7 @@ window.onload = function() {
   const lightModeButton = document.querySelector('#light-mode');
   const locationButton = document.querySelector('#location-button');
   const homeButton = document.querySelector('#home-button');
+  const testtext = document.getElementById('board');
 
   // 如果 localStorage 中有 city 鍵值，則將 cityName 設為該值
   // 否則 cityName 保持為 null
@@ -109,6 +110,8 @@ window.onload = function() {
     locationButton.classList.remove('dark-font');
     homeButton.classList.add('light-font');
     homeButton.classList.remove('dark-font');
+    testtext.classList.add('light-font');
+    testtext.classList.remove('dark-font');
     // 更新 GitHub 圖示
     document.querySelectorAll('.github-icon').forEach(icon => {
       icon.src = "assets/github-mark-white.svg";
@@ -147,6 +150,8 @@ window.onload = function() {
     locationButton.classList.add('dark-font');
     homeButton.classList.remove('light-font');
     homeButton.classList.add('dark-font');
+    testtext.classList.remove('light-font');
+    testtext.classList.add('dark-font');
     // 更新 GitHub 圖示
     document.querySelectorAll('.github-icon').forEach(icon => {
       icon.src = "assets/github-mark.svg";
@@ -213,10 +218,7 @@ window.onload = function() {
     };
 
     // 添加載入動畫
-    $('#board').html(
-        `<div class="loading-container"><div class="loading-spinner"></div><p class="${
-            (mode === 'light-font') ? 'dark-font' : 'light-font'
-        }">正在取得天氣資訊...</p></div>`);
+    $('#board').html(`<div class="loading-container"><div class="loading-spinner"></div><p>正在取得天氣資訊...</p></div>`);
 
     try {
       const response = await $.ajax({
