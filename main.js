@@ -171,17 +171,6 @@ window.onload = function() {
       await fetchWeatherInfo();
       popupMenu.classList.add('hidden');
 
-      // 清除舊的定時器（如果存在）
-      if (weatherIntervalId) {
-        clearInterval(weatherIntervalId);
-      }
-
-      // 設置新的定時器
-      weatherIntervalId = setInterval(async () => {
-        if (cityName) {
-          await fetchWeatherInfo(cityName);
-        }
-      }, 30000000);
 
       return false;
     });
@@ -292,6 +281,7 @@ window.onload = function() {
             forecast: forecastList,  // 前端 API 模式不顯示預報
             advice: ''               // 前端 API 模式不顯示建議
           };
+
           await displayWeatherInfo(weatherData);
         }
       } catch (error) {
@@ -391,6 +381,16 @@ window.onload = function() {
         }
       });
     }
+    if (weatherIntervalId) {
+      clearInterval(weatherIntervalId);
+    }
+
+    // 設置新的定時器
+    weatherIntervalId = setInterval(async () => {
+      if (cityName) {
+        await fetchWeatherInfo(cityName);
+      }
+    }, 3000000);  // 每30分鐘更新一次
   }
 
   // 修改過的 getCityNameFromCoords 函式
@@ -402,23 +402,14 @@ window.onload = function() {
         url: backendUrl,
         method: 'GET',
         data: {latitude: latitude, longitude: longitude , useFrontendApi: useFrontendApi},
-        timeout: 50000  // 設定超時為5000毫秒（50秒）
+        timeout: 500000  // 設定超時為5000毫秒（50秒）
       });
       if (response && response.city && !useFrontendApi) {
         cityName = response.city;
         displayWeatherInfo(response);
         // localStorage.setItem('city', cityName);
 
-        if (weatherIntervalId) {
-          clearInterval(weatherIntervalId);
-        }
 
-        // 設置新的定時器
-        weatherIntervalId = setInterval(async () => {
-          if (cityName) {
-            await fetchWeatherInfo(cityName);
-          }
-        }, 30000000);
         $('#board').removeClass('loading');
 
         return null;
