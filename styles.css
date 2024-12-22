@@ -50,7 +50,6 @@
         left: 20px;
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5), 0 0 10px 0 rgba(0, 0, 0, 0.5);
         background-color: transparent;
-        border: solid 1px rgb(0, 0, 0);
         border-radius: 10px;
         cursor: pointer;
         z-index: 1000;
