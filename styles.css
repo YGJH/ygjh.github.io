@@ -789,7 +789,7 @@ button {
 #menu-button, #location-button, #dark-mode, #light-mode, #home-button {
     transition: all 0.3s ease;
     transform-origin: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #menu-button:hover, 
@@ -829,7 +829,7 @@ button {
 
 .city-button:active {
     transform: translateX(5px);
-    background: rgba(255, 255, 255, 0.15) !important;
+    background: rgba(0, 0, 0, 0.15) !important;
 }
 
 /* 切換按鈕容器效果 */
@@ -871,7 +871,6 @@ button {
     padding: 7px;
     background-color: transparent;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    border: solid 1px rgb(0, 0, 0);
     border-radius: 10px;
     cursor: pointer;
     z-index: 100;
