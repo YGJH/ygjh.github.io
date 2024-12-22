@@ -276,7 +276,7 @@
     position: fixed;
     padding: 10px;
     width: 200px;
-    max-height: calc(100vh - 150px); /* 調整最大高度，扣除頂部和底部空間 */
+    max-height: calc(100vh - 100px); /* 調整最大高度，扣除頂部和底部空間 */
     overflow-y: auto;
     margin-top: 50px;
     z-index: 40;
@@ -290,6 +290,10 @@
 /* 調整城市按鈕的容器樣式 */
 .city-button:last-child {
     margin-bottom: 1px; /* 為最後一個按鈕增加底部間距 */
+}
+
+.spacediv {
+    height: 50px;
 }
 
 .background-menu-light {
