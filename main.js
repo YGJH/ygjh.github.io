@@ -24,13 +24,12 @@ window.onload = function() {
   const headerElement = document.querySelector('#background-menu');
   const apiToggleHtml = `
   <div id="api-toggle-container">
-  <label class="switch">
-  <input type="checkbox" id="api-toggle" checked>
-        <span class="slider round"></span>
-        </label>
-      <span class="toggle-label">快速回應</span>
-      </div>
-      `;
+    <label class="switch">
+      <input type="checkbox" id="api-toggle" checked>
+      <span class="slider round"></span>
+    </label>
+    <span class="toggle-label">快速回應</span>
+  </div>`;
   headerElement.insertAdjacentHTML('beforeend', apiToggleHtml);
 
   // 綁定切換事件
