@@ -275,7 +275,7 @@
     position: fixed;
     padding: 10px;
     width: 200px;
-    max-height: calc(100vh - 150px); /* 調整最大高度，扣除頂部和底部空間 */
+    max-height: calc(100vh - 120px); /* 調整最大高度，扣除頂部和底部空間 */
     overflow-y: auto;
     margin-top: 50px;
     z-index: 40;
@@ -284,6 +284,10 @@
     top: 30px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
     padding-bottom: 20px; /* 增加底部padding */
+}
+
+.blank-div {
+    height: 30px;
 }
 
 /* 調整城市按鈕的容器樣式 */
