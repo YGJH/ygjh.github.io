@@ -204,8 +204,8 @@ window.onload = function() {
 
 
   async function fetchWeatherInfoFromBackend() {
-    const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
-    // const apiUrl = `http://localhost:3000/weather`;
+    // const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
+    const apiUrl = `http://localhost:3000/weather`;
 
     // 設定 API 請求的共用設定
     const requestConfig = {
@@ -218,13 +218,13 @@ window.onload = function() {
 
     // 添加載入動畫
     $('#board').html(`<div class="loading-container"><div class="loading-spinner"></div><p>正在取得天氣資訊...</p></div>`);
-
+    const timestamp = new Date();
     try {
       const response = await $.ajax({
         ...requestConfig,
         url: apiUrl,
         type: 'POST',
-        data: JSON.stringify({cityName}),
+        data: JSON.stringify({cityName , timestamp}),
         success: (data) => {
           // console.log('成功取得天氣資訊：', data);
           displayWeatherInfo(data);
@@ -432,20 +432,20 @@ window.onload = function() {
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-      // const backendUrl = 'http://localhost:3000/weather';
-      const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
+      const backendUrl = 'http://localhost:3000/weather';
+      // const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
       const requestConfig = {
         headers: {
           'X-API-Key': '61a60170273e74a5be90355ffe8e86ad',
         },
         timeout: 50000
       };
-
+      const timestamp = new Date();
       const response = await $.ajax({
         ...requestConfig,
         url: backendUrl,
         method: 'GET',
-        data: {latitude: latitude, longitude: longitude , useFrontendApi: useFrontendApi},
+        data: {latitude: latitude, longitude: longitude , useFrontendApi: useFrontendApi , timestamp: timestamp},
       });
       if (response && response.city && !useFrontendApi) {
         cityName = response.city;
