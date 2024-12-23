@@ -68,12 +68,7 @@ window.onload = function() {
       </div>
     `);
 
-    // 檢查是否有儲存的城市，如果有則獲取天氣資訊
-    // const storedCity = localStorage.getItem('city');
-    // if (storedCity) {
-    //   cityName = storedCity;
-    //   fetchWeatherInfo();
-    // }
+
   }
   init();
 
@@ -204,8 +199,8 @@ window.onload = function() {
 
 
   async function fetchWeatherInfoFromBackend() {
-    // const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
-    const apiUrl = `http://localhost:3000/weather`;
+    const apiUrl = `https://backend-test-sic9.onrender.com/weather`;
+    // const apiUrl = `http://localhost:3000/weather`;
 
     // 設定 API 請求的共用設定
     const requestConfig = {
@@ -432,8 +427,8 @@ window.onload = function() {
   // 修改過的 getCityNameFromCoords 函式
   async function getCityNameFromCoords(latitude, longitude) {
     try {
-      const backendUrl = 'http://localhost:3000/weather';
-      // const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
+      // const backendUrl = 'http://localhost:3000/weather';
+      const backendUrl = 'https://backend-test-sic9.onrender.com/weather';
       const requestConfig = {
         headers: {
           'X-API-Key': '61a60170273e74a5be90355ffe8e86ad',
