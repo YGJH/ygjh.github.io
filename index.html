@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>楊子賢｜技術履歷</title>
+<meta name="description" content="楊子賢 ZIH-SIAN YANG — 國立臺灣海洋大學資工系。AI、機器學習與演算法。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#183348; --teal:#167C80; --ink:#263642; --muted:#3F4F5B;
+  --pale:#F0F5F7; --rule:#CCDCE2; --page:#EDF2F4; --card:#FFFFFF;
+  --shadow:0 1px 2px rgba(24,51,72,.06),0 12px 40px rgba(24,51,72,.08);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --navy:#DCE9EF; --teal:#4FC3C6; --ink:#D5DFE6; --muted:#9BAEBC;
+    --pale:#1B2A35; --rule:#2C3F4D; --page:#0D161D; --card:#131E27;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --navy:#DCE9EF; --teal:#4FC3C6; --ink:#D5DFE6; --muted:#9BAEBC;
+  --pale:#1B2A35; --rule:#2C3F4D; --page:#0D161D; --card:#131E27;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--page); color:var(--ink);
+  font-family:"Inter","Noto Sans TC",-apple-system,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.72; padding:32px 16px 56px;
+}
+.sheet{
+  max-width:1000px; margin:0 auto; background:var(--card);
+  border-radius:14px; box-shadow:var(--shadow); overflow:hidden;
+}
+.inner{padding:44px 44px 48px}
+
+/* ---------- header ---------- */
+header{display:flex; align-items:flex-end; gap:28px; flex-wrap:wrap}
+.name{flex:1 1 240px; min-width:0}
+.name h1{font-size:clamp(34px,6vw,46px); line-height:1.1; color:var(--navy); font-weight:700; letter-spacing:.02em}
+.name .en{color:var(--muted); font-size:13px; letter-spacing:.14em; margin-top:6px}
+.meta{flex:1 1 300px; text-align:right; font-size:13.5px; color:var(--muted); line-height:1.95}
+.meta a{color:var(--teal); text-decoration:none; border-bottom:1px solid transparent}
+.meta a:hover{border-bottom-color:var(--teal)}
+.meta .sep{opacity:.45}
+.portrait{width:94px; height:94px; border-radius:10px; object-fit:cover; border:1px solid var(--rule); flex:0 0 auto}
+.topline{height:2px; background:var(--teal); margin:20px 0 30px; border:0}
+
+/* ---------- layout ---------- */
+.cols{display:grid; grid-template-columns:270px 1fr; gap:34px; align-items:start}
+
+/* ---------- sidebar ---------- */
+aside{background:var(--pale); border-radius:10px; padding:22px 20px; font-size:13.5px}
+aside h2{color:var(--navy); font-size:16px; font-weight:700; margin-bottom:12px}
+aside h3{color:var(--navy); font-size:14px; font-weight:700; margin:20px 0 10px; padding-top:16px; border-top:1px solid var(--rule)}
+.award{margin-bottom:12px}
+.award b{color:var(--teal); font-weight:600; display:block}
+.award span{color:var(--muted); font-size:12.8px; display:block; line-height:1.6}
+.skill{margin-bottom:10px}
+.skill b{display:block; color:var(--navy); font-size:13px}
+.skill span{color:var(--muted); font-size:12.8px}
+.rank{color:var(--muted); font-size:12.5px}
+
+/* ---------- main ---------- */
+section{margin-bottom:34px}
+section:last-child{margin-bottom:0}
+.sec-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  border-bottom:1px solid var(--rule); padding-bottom:5px; margin-bottom:16px}
+.sec-head h2{color:var(--navy); font-size:19px; font-weight:700}
+.sec-head span{color:var(--teal); font-size:10.5px; letter-spacing:.16em; font-weight:600; white-space:nowrap}
+.paper-title{color:var(--navy); font-size:15.5px; font-weight:700; line-height:1.5}
+.byline{font-size:13px; color:var(--muted); margin:6px 0 10px}
+.byline b{color:var(--ink)}
+p.body{font-size:14px}
+ul{list-style:none; margin-top:12px}
+li{position:relative; padding-left:18px; margin-bottom:7px; font-size:14px}
+li::before{content:"\25AA"; position:absolute; left:0; top:-1px; color:var(--teal)}
+li b{color:var(--navy)}
+a.arxiv{display:inline-block; margin-top:12px; color:var(--teal); font-weight:600;
+  font-size:13.5px; text-decoration:none; border-bottom:1px solid var(--rule)}
+a.arxiv:hover{border-bottom-color:var(--teal)}
+.project{margin-bottom:26px}
+.project:last-child{margin-bottom:0}
+.project h3{color:var(--navy); font-size:16px; font-weight:700}
+.project .sub{color:var(--muted); font-size:13px; margin-top:2px}
+.tech{margin-top:6px; color:var(--teal); font-size:12.2px}
+.math{font-family:"Cambria Math","Latin Modern Math","Georgia",serif; font-size:13.5px;
+  color:var(--navy); white-space:nowrap; letter-spacing:.01em}
+.math sub,.math sup{font-size:.72em; line-height:0}
+@media (max-width:820px){.math{white-space:normal}}
+
+footer{text-align:center; color:var(--muted); font-size:12px; margin-top:24px; opacity:.75}
+
+/* ---------- responsive ---------- */
+@media (max-width:820px){
+  body{padding:16px 12px 40px; font-size:14.5px}
+  .inner{padding:28px 22px 32px}
+  .cols{grid-template-columns:1fr; gap:26px}
+  header{gap:18px}
+  .meta{text-align:left; flex-basis:100%; order:3}
+  .portrait{width:76px; height:76px}
+}
+
+/* ---------- print ---------- */
+@media print{
+  :root{--page:#fff; --card:#fff}
+  body{padding:0; font-size:9.6pt; line-height:1.5; background:#fff}
+  .sheet{box-shadow:none; border-radius:0; max-width:none}
+  .inner{padding:0}
+  section{margin-bottom:16px}
+  .cols{grid-template-columns:240px 1fr; gap:20px}
+  footer{display:none}
+}
+</style>
+</head>
+<body>
+<main class="sheet">
+<div class="inner">
+
+  <header>
+    <div class="name">
+      <h1>楊子賢</h1>
+      <div class="en">ZIH-SIAN YANG</div>
+    </div>
+    <div class="meta">
+      國立臺灣海洋大學｜資訊工程學系<br>
+      <a href="mailto:jihuty@gmail.com">jihuty@gmail.com</a><span class="sep">｜</span><a href="mailto:01257049@email.ntou.edu.tw">01257049@email.ntou.edu.tw</a><br>
+      <a href="https://github.com/YGJH">github.com/YGJH</a><span class="sep">｜</span><a href="https://www.kaggle.com/ygjh13">kaggle.com/ygjh13</a>
+    </div>
+    <img class="portrait" src="123123.png" onerror="this.remove()">
+  </header>
+
+  <hr class="topline">
+
+  <div class="cols">
+
+    <aside>
+      <h2>重點</h2>
+      <div class="award">
+        <b>Kaggle Expert</b>
+        <span>PTCG AI Battle｜銀牌｜237／6,807<br>Orbit Wars｜銅牌｜452／4,729</span>
+      </div>
+      <div class="award">
+        <b>第一作者研究</b>
+        <span>EF1-Constrained Nash Social Welfare<br>預印本；TAAI 2026 審查中</span>
+      </div>
+
+      <h3>競賽與檢定</h3>
+      <div class="award"><b>NCPC 2025</b><span>決賽佳作</span></div>
+      <div class="award"><b>TOPC 2025</b><span>銀獎（60／228）</span></div>
+      <div class="award"><b>CPE 2025</b><span>5 題｜76／2,515（前 3%）</span></div>
+      <div class="award"><b>TOEIC 多益 815</b><span>藍色證書｜2026 年</span></div>
+
+      <h3>技能</h3>
+      <div class="skill">
+        <b>ML／研究</b>
+        <span>PyTorch、Transformer、PPO、W&amp;B</span>
+      </div>
+      <div class="skill">
+        <b>演算法／系統</b>
+        <span>啟發式搜索、模仿學習、Python、Rust、C/C++</span>
+      </div>
+
+      <h3>學歷</h3>
+      <div class="skill">
+        <b>國立臺灣海洋大學</b>
+        <span>資訊工程學系</span>
+      </div>
+      <div class="rank">歷年排名｜班排名 21／59｜系排名 45／136（33%）</div>
+    </aside>
+
+    <div>
+
+      <section>
+        <div class="sec-head"><h2>研究成果</h2><span>RESEARCH HIGHLIGHT</span></div>
+        <div class="paper-title">EF1-Constrained Nash Social Welfare with Identical Additive Valuations: Complexity, Guarantees, and Experiments</div>
+        <div class="byline"><b>第一作者</b>｜2026｜預印本；已投稿 TAAI 2026，審查中</div>
+        <p class="body">研究不可分割物品分配中，如何同時追求 <b>EF1（移除至多一件物品後無嫉妒）</b> 公平性與 <b>Nash Social Welfare（NSW）</b>。聚焦於所有 agent 具有相同加法估值的設定：先刻畫 EF1 對福利的理論代價與近似保證，再轉化為逐步分配時仍能保證公平、並由學習策略最佳化 welfare 的方法。</p>
+        <ul>
+          <li><b>Small-item 下限保證（核心結果）：</b>baseline 為任何 EF1 allocation 至少達最優 NSW 的 <i>e</i><sup>−1/<i>e</i></sup> ≈ 0.692 倍；證明在 ε-small-item condition（任一 good 價值 ≤ εμ，μ 為平均份額）下可提升至 max{<i>e</i><sup>−1/<i>e</i></sup>, ρ<sub>n</sub>(ε)}，其中
+            <span class="math">ρ<sub>n</sub>(ε) = min<sub>1≤k≤n−1</sub>&hairsp;[&hairsp;(1 − kε/n)<sup>n−k</sup>(1 + (n−k)ε/n)<sup>k</sup>&hairsp;]<sup>1/n</sup></span>
+            取自 EF1 所允許最不平均的 bundle 價值分佈。</li>
+          <li><b>福利損失是 ε 的二次項：</b><span class="math">ρ<sub>n</sub>(ε) = 1 − ⅛ε² + O(ε³) = 1 − O(ε²)</span>，ε→0 時收斂至 1；最大物品佔比減半，福利損失只剩四分之一——物品夠小時 EF1 幾乎不犧牲 NSW。</li>
+          <li><b>Sequential EF1 可行性：</b>一般加法估值下，每步皆維持 EF1 可能無解；對 identical valuations，證明每次將新 good 分給目前 utility 最低的 agent 即可永遠保持 EF1。</li>
+          <li><b>PriorityNet：</b>以 PPO 學習每步 allocation decision，並設計 prospective EF1 action mask 預先排除會破壞 EF1 的 actions；fairness 由 mask 保證，policy 僅在合法 actions 中提升 welfare。</li>
+          <li><b>實驗結果：</b>offline／online mean normalized NSW 分別為 <b>0.9911／0.9701</b>，皆接近 LPT greedy baseline；PriorityNet 在 individual instances 上具有較高 win rate。</li>
+        </ul>
+        <a class="arxiv" href="https://arxiv.org/abs/2609.03846">arXiv:2609.03846 &rarr;</a>
+      </section>
+
+      <section>
+        <div class="sec-head"><h2>專案</h2><span>SELECTED PROJECTS</span></div>
+
+        <div class="project">
+          <h3>Pokémon TCG 決策代理人</h3>
+          <div class="sub">Transformer 模仿學習系統｜Kaggle PTCG AI Battle 銀牌</div>
+          <div class="tech">PyTorch · Transformer · Pointer Network · Behavior Cloning · W&amp;B</div>
+          <ul>
+            <li><b>Kaggle 銀牌（237／6,807）：</b>以端到端決策代理人直接銜接官方 C++ 遊戲引擎，完成競賽部署。</li>
+            <li><b>準確率成果：</b>兩個牌組的 specialist 相對基準準確率增益達 <b>+20.5／+49.4 個百分點</b>；以 Transformer 編碼 46 個狀態 token，並為動態合法選項評分。</li>
+            <li><b>可擴展訓練：</b>以數百萬個決策點訓練，整合 memory-mapped shard、GPU 特徵處理、bfloat16、EMA 與 Muon optimizer。</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <h3>Orbit Wars 策略代理人</h3>
+          <div class="sub">動態幾何規劃與多波次策略｜Kaggle Orbit Wars 銅牌</div>
+          <div class="tech">Rust · Python · 啟發式搜尋 · 動態幾何規劃 · 貪婪最佳化</div>
+          <ul>
+            <li><b>Kaggle 銅牌（452／4,729）：</b>設計自主策略代理人，在行星持續移動與敵方可能增援的環境中規劃攻防。</li>
+            <li><b>未來狀態規劃：</b>預測軌道位置並求解 ETA 攔截；以抵達時的守軍、敵方增援風險與行星產能評估攻擊價值。</li>
+            <li><b>即時決策與部署：</b>以 ROI 導向的貪婪法選擇多波次行動、保留前線防禦；採 Rust 擴充正式推論。</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+</main>
+<footer>楊子賢 ZIH-SIAN YANG · 2026</footer>
+</body>
+</html>
